@@ -243,7 +243,7 @@ const Register: React.FC = () => {
               onChange={handleFileChange}
               className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
             />
-            {/* {errors.avatar && <p className="text-sm text-red-500">{errors.avatar}</p>} */}
+            {errors.avatar && <p className="text-sm text-red-500">{errors.avatar}</p>}
           </div>
 
           {/* Submit Button */}
