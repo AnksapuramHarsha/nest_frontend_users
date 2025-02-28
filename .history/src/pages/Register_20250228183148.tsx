@@ -113,7 +113,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await axios.post("http://18.142.172.41:3000/auth/register", formDataToSubmit, {
+      const response = await axios.post("http://:3000/auth/register", formDataToSubmit, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
