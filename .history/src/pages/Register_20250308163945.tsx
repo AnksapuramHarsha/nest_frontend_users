@@ -1,6 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { register } from "../apis/api";
 
 interface FormData {
   firstName: string;
@@ -113,7 +113,11 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await register(formDataToSubmit);
+      const response = await axios.post("http://localhost:3000/auth/register", formDataToSubmit, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       if (response.status === 200) {
         setRegistrationSuccess(true);
