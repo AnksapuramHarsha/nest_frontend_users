@@ -47,7 +47,7 @@ export interface Patient {
   ethnicity?: string;
   emergencyContacts?: string[];
   preferredPharmacy?: UUID|null;
-  primaryCareProvider?: UUID|null;
+  primaryCareProvider?: UUID|;
   active: boolean;
   preferences?: object;
   bloodType?: string;

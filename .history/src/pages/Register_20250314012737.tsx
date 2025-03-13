@@ -149,7 +149,7 @@ const Register: React.FC = () => {
         console.log("Unexpected response status:", response.status);
         setErrorMessage(`Unexpected response: ${response.status}`);
       }
-    } catch (error:any) {
+    } catch (error) {
       console.error("Registration error:", error);
       setErrorMessage(error.response?.data?.message || "Registration failed. Please try again.");
     }
@@ -281,7 +281,6 @@ const Register: React.FC = () => {
               id="role"
               name="role"
               value={formData.role}
-              // @ts-ignore
               onChange={handleInputChange}
               className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
             >

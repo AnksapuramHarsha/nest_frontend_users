@@ -156,7 +156,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             <input
                                 type="text"
                                 name={field}
-                                value={formData[field as keyof Omit<Patient, "id">] as string}
+                                value={formData[field as keyof Patient] as string}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded"
                             />
@@ -208,7 +208,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             <label className="block capitalize">{field.replace(/([A-Z])/g, " $1")}</label>
                             <select
                                 name={field}
-                                value={formData[field as keyof Omit<Patient, "id">] as string}
+                                value={formData[field as keyof Patient] as string}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded"
                             >

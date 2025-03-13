@@ -16,13 +16,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editData, setEditData] = useState<Partial<Patient>>({
-        contact: {
-            email: "",
-            phone: "",
-            mobilePhone: ""
-        }
-    });
+    const [editData, setEditData] = useState<Partial<Patient>>({});
 
         const fetchPatients = async () => {
             if (!networkId) {
@@ -270,10 +264,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                                         onChange={(e) =>
                                             setEditData({
                                                 ...editData,
-                                                address: { 
-                                                    ...editData.address, 
-                                                    [field]: e.target.value || "" 
-                                                } as Patient["address"],
+                                                address: { ...editData.address, [field]: e.target.value },
                                             })
                                         }
                                     />
@@ -291,10 +282,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                                         onChange={(e) =>
                                             setEditData({
                                                 ...editData,
-                                                contact: { 
-                                                    ...editData.contact, 
-                                                    [field]: e.target.value || "" 
-                                                } as Patient["contact"], // Ensure the type is Patient["contact"]
+                                                contact: { ...editData.contact, [field]: e.target.value },
                                             })
                                         }
                                     />

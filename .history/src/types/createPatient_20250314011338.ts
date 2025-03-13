@@ -40,14 +40,14 @@ export interface Patient {
   preferredPronouns?: string;
   address: Address;
   contact: Contact;
-  preferredLanguage?: string;
+  preferredLanguage?: string|;
   interpreterRequired: boolean;
   maritalStatus?: string;
   race?: object;
   ethnicity?: string;
   emergencyContacts?: string[];
-  preferredPharmacy?: UUID|null;
-  primaryCareProvider?: UUID|null;
+  preferredPharmacy?: UUID;
+  primaryCareProvider?: UUID;
   active: boolean;
   preferences?: object;
   bloodType?: string;

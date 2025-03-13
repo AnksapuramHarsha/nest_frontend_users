@@ -16,13 +16,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [editData, setEditData] = useState<Partial<Patient>>({
-        contact: {
-            email: "",
-            phone: "",
-            mobilePhone: ""
-        }
-    });
+    const [editData, setEditData] = useState<Partial<Patient>>({});
 
         const fetchPatients = async () => {
             if (!networkId) {
@@ -288,15 +282,19 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                                         type="text"
                                         className="border p-2 w-full rounded"
                                         value={editData.contact?.[field as keyof Patient["contact"]] || ""}
-                                        onChange={(e) =>
-                                            setEditData({
-                                                ...editData,
-                                                contact: { 
-                                                    ...editData.contact, 
-                                                    [field]: e.target.value || "" 
-                                                } as Patient["contact"], // Ensure the type is Patient["contact"]
-                                            })
-                                        }
+                                        type="text"
+className="border p-2 w-full rounded"
+value={editData.contact?.[field as keyof Patient["contact"]] || ""}
+onChange={(e) =>
+    setEditData({
+        ...editData,
+        contact: { 
+            ...editData.contact, 
+            [field]: e.target.value || "" 
+        } as Patient["contact"], // Ensure the type is Patient["contact"]
+    })
+}
+/>
                                     />
                                 </div>
                             ))}

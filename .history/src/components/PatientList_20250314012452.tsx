@@ -294,7 +294,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                                                 contact: { 
                                                     ...editData.contact, 
                                                     [field]: e.target.value || "" 
-                                                } as Patient["contact"], // Ensure the type is Patient["contact"]
+                                                },
                                             })
                                         }
                                     />

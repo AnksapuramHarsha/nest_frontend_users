@@ -56,6 +56,14 @@ const Register: React.FC = () => {
     }
   };
 
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const validateForm = (): boolean => {
     let isValid = true;
     const newErrors: FormData = {
@@ -149,9 +157,13 @@ const Register: React.FC = () => {
         console.log("Unexpected response status:", response.status);
         setErrorMessage(`Unexpected response: ${response.status}`);
       }
-    } catch (error:any) {
+    } catch (error) {
       console.error("Registration error:", error);
-      setErrorMessage(error.response?.data?.message || "Registration failed. Please try again.");
+      if (error instanceof Error) {
+        setErrorMessage((error as any).response?.data?.message || "Registration failed. Please try again.");
+      } else {
+        setErrorMessage("Registration failed. Please try again.");
+      }
     }
      finally {
       console.log("Form submission process completed.");
@@ -186,7 +198,6 @@ const Register: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* First Name Input */}
           <div>
             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
             <input
@@ -195,7 +206,7 @@ const Register: React.FC = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleInputChange}
-              className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
+              onChange={handleSelectChange}
               placeholder="Enter your first name"
             />
             {errors.firstName && <p className="text-sm text-red-500">{errors.firstName}</p>}
@@ -281,7 +292,6 @@ const Register: React.FC = () => {
               id="role"
               name="role"
               value={formData.role}
-              // @ts-ignore
               onChange={handleInputChange}
               className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
             >

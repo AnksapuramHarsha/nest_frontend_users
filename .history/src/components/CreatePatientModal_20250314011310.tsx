@@ -10,8 +10,8 @@ interface CreatePatientModalProps {
 }
 
 const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, accessToken, onClose ,refreshPatients}) => {
-    const [formData, setFormData] = useState<Omit<Patient, "id">>({
-        networkId: networkId || "",
+    const [formData, setFormData] = useState<Partial<Patient>>({
+        networkId,
         upid: "",
         abha: "",
         mrn: "",
@@ -60,12 +60,12 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         }));
     };
 
-    const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {
+    const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: string) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
             ...prev,
             [section]: {
-                ...(prev[section] as any),
+                ...(prev[section as keyof Patient] as object),
                 [name]: value,
             },
         }));
@@ -156,7 +156,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             <input
                                 type="text"
                                 name={field}
-                                value={formData[field as keyof Omit<Patient, "id">] as string}
+                                value={formData[field as keyof Patient] as string}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded"
                             />
@@ -208,7 +208,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             <label className="block capitalize">{field.replace(/([A-Z])/g, " $1")}</label>
                             <select
                                 name={field}
-                                value={formData[field as keyof Omit<Patient, "id">] as string}
+                                value={formData[field as keyof Patient] as string}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded"
                             >
