@@ -54,6 +54,5 @@ export interface CreatePatient {
       livingWill: boolean;
       powerOfAttorney?: string;
     };
-    
   }
   

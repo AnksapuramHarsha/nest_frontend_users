@@ -5,7 +5,7 @@ import PatientList from "../components/PatientList";
 const PatientPage: React.FC = () => {
 //   const [searchParams] = useSearchParams();
 //   const networkId = searchParams.get("networkId") || "";
-    const networkId = "2e598da8-2764-4691-a5b8-9b7c65522186"
+    const networkId = "550e8400-e29b-41d4-a716-446655440000"
 
   return (
     <div className="p-8 pt-20">

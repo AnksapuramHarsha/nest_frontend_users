@@ -639,10 +639,6 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                                 <label className="text-gray-700">Last Name</label>
                                 <input type="text" name="nameFamily" onChange={handleCreateInputChange} className="w-full p-2 border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300" />
                             </div>
-                            <div>
-                                <label className="text-gray-700">Preferred Name</label>
-                                <input type="text" name="preferredName" onChange={handleCreateInputChange} className="w-full p-2 border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300" />
-                            </div>
 
                             {/* Date of Birth & Gender */}
                             <div>

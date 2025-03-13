@@ -264,6 +264,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
     const [newPatientData, setNewPatientData] = useState<Partial<CreatePatient>>({
         networkId,
+        createdBy: "",
+        updatedBy: "",
         active: true,
     });
 
@@ -434,9 +436,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         }
 
         try {
-            console.log("Creating patient with data:", newPatientData);
             await createPatient(newPatientData as CreatePatient, accessToken);
-
             toast.success("Patient created successfully.", {
                 position: "top-right",
                 autoClose: 3000,
@@ -638,10 +638,6 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                             <div>
                                 <label className="text-gray-700">Last Name</label>
                                 <input type="text" name="nameFamily" onChange={handleCreateInputChange} className="w-full p-2 border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300" />
-                            </div>
-                            <div>
-                                <label className="text-gray-700">Preferred Name</label>
-                                <input type="text" name="preferredName" onChange={handleCreateInputChange} className="w-full p-2 border border-gray-300 rounded-md transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300" />
                             </div>
 
                             {/* Date of Birth & Gender */}
