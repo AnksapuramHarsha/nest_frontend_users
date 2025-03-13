@@ -253,13 +253,13 @@ interface PatientListProps {
 
 const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const { accessToken } = useAuth();
-    const [patients, setPatients] = useState<Patient[]>([]);
+    const [patients, setPatients] = useState<CreatePatient[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+    const [selectedPatient, setSelectedPatient] = useState<CreatePatient | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-    const [editFormData, setEditFormData] = useState<Partial<Patient>>({});
+    const [editFormData, setEditFormData] = useState<Partial<CreatePatient>>({});
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
     const [newPatientData, setNewPatientData] = useState<Partial<CreatePatient>>({
@@ -291,7 +291,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         loadPatients();
     }, [networkId, accessToken]);
 
-    const handleView = (id: string) => {
+    const handleView = (upid: string) => {
         const patient = patients.find((p) => p.id === id);
         if (patient) {
             setSelectedPatient(patient);
@@ -326,7 +326,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         }
     };
 
-    const handleEdit = (patient: Patient) => {
+    const handleEdit = (patient: CreatePatient) => {
         setSelectedPatient(patient);
         setEditFormData(patient); // Set current patient data to form
         setIsEditModalOpen(true);
@@ -430,31 +430,17 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     };
 
     const handleCreatePatient = async () => {
-        if (!accessToken) {
-            toast.error("Unauthorized: No token found.");
-            return;
-        }
-
         try {
-            await createPatient(newPatientData as CreatePatient, accessToken);
-            toast.success("Patient created successfully.", {
-                position: "top-right",
-                autoClose: 3000,
-            });
-
-            // Fetch updated list
-            const updatedPatients = await fetchPatientsByNetwork(networkId, accessToken);
-            setPatients(updatedPatients);
-
-            setIsCreateModalOpen(false);
+          const createdPatient = await createPatient(newPatientData as CreatePatient, accessToken);
+          toast.success("Patient created successfully.");
+          
+          setPatients((prev) => [...prev, createdPatient]); // ✅ Append new patient directly
+          setIsCreateModalOpen(false);
         } catch (error: any) {
-            toast.error(error.message, {
-                position: "top-right",
-                autoClose: 3000,
-            });
+          toast.error(error.message);
         }
-    };
-
+      };
+      
 
     return (
         <div className="p-6 bg-white shadow-lg rounded-lg">
@@ -703,7 +689,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
 
                         {/* Buttons */}
                         <div className="flex justify-end space-x-3 mt-6">
-                            <button onClick={handleCreatePatient} className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
+                            <button className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
                             <button onClick={() => setIsCreateModalOpen(false)} className="px-5 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Cancel</button>
                         </div>
                     </div>

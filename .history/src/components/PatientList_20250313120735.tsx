@@ -256,7 +256,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const [patients, setPatients] = useState<Patient[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+    const [selectedPatient, setSelectedPatient] = useState<CreatePatient | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
     const [editFormData, setEditFormData] = useState<Partial<Patient>>({});
@@ -294,6 +294,35 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const handleView = (id: string) => {
         const patient = patients.find((p) => p.id === id);
         if (patient) {
+            const mappedPatient: CreatePatient = {
+                networkId: patient.networkId,
+                createdBy: patient.createdBy || "",
+                updatedBy: patient.updatedBy || "",
+                active: patient.active,
+                upid: patient.upid || "",
+                abha: patient.abha || "",
+                mrn: patient.mrn || "",
+                identifier: {
+                    aadhar: patient.identifier?.aadhar || "",
+                    pan: patient.identifier?.pan || "",
+                },
+                namePrefix: patient.namePrefix || "",
+                nameGiven: patient.nameGiven || "",
+                nameMiddle: patient.nameMiddle || "",
+                nameFamily: patient.nameFamily || "",
+                birthDate: patient.birthDate || "",
+                genderIdentity: patient.genderIdentity || "",
+                address: {
+                    line1: patient.address?.line1 || "",
+                    city: patient.address?.city || "",
+                    state: patient.address?.state || "",
+                    postalCode: patient.address?.postalCode || "",
+                },
+                contact: {
+                    email: patient.contact?.email || "",
+                    phone: patient.contact?.phone || "",
+                },
+            };
             setSelectedPatient(patient);
             setIsModalOpen(true);
         } else {
@@ -703,7 +732,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
 
                         {/* Buttons */}
                         <div className="flex justify-end space-x-3 mt-6">
-                            <button onClick={handleCreatePatient} className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
+                            <button className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
                             <button onClick={() => setIsCreateModalOpen(false)} className="px-5 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Cancel</button>
                         </div>
                     </div>

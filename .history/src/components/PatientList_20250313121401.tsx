@@ -253,10 +253,10 @@ interface PatientListProps {
 
 const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const { accessToken } = useAuth();
-    const [patients, setPatients] = useState<Patient[]>([]);
+    const [patients, setPatients] = useState<CreatePatient[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+    const [selectedPatient, setSelectedPatient] = useState<CreatePatient | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
     const [editFormData, setEditFormData] = useState<Partial<Patient>>({});
@@ -703,7 +703,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
 
                         {/* Buttons */}
                         <div className="flex justify-end space-x-3 mt-6">
-                            <button onClick={handleCreatePatient} className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
+                            <button className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
                             <button onClick={() => setIsCreateModalOpen(false)} className="px-5 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Cancel</button>
                         </div>
                     </div>

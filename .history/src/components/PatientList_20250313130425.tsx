@@ -241,7 +241,6 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchPatientsByNetwork, deletePatient, updatePatient, createPatient } from "../apis/patientApi";
-import { Patient } from "../types/patient";
 import { CreatePatient } from "../types/createPatient";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
@@ -253,13 +252,13 @@ interface PatientListProps {
 
 const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     const { accessToken } = useAuth();
-    const [patients, setPatients] = useState<Patient[]>([]);
+    const [patients, setPatients] = useState<CreatePatient[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
+    const [selectedPatient, setSelectedPatient] = useState<CreatePatient | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-    const [editFormData, setEditFormData] = useState<Partial<Patient>>({});
+    const [editFormData, setEditFormData] = useState<Partial<CreatePatient>>({});
     const [searchTerm, setSearchTerm] = useState<string>("");
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false);
     const [newPatientData, setNewPatientData] = useState<Partial<CreatePatient>>({
@@ -291,8 +290,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         loadPatients();
     }, [networkId, accessToken]);
 
-    const handleView = (id: string) => {
-        const patient = patients.find((p) => p.id === id);
+    const handleView = (upid: string) => {
+        const patient = patients.find((p) => p.upid === upid);
         if (patient) {
             setSelectedPatient(patient);
             setIsModalOpen(true);
@@ -306,29 +305,30 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         setSelectedPatient(null);
     };
 
-    const handleDelete = async (id: string) => {
+    const handleDelete = async (upid: string) => {
         if (!accessToken) {
             toast.error("Unauthorized: No token found.");
             return;
         }
-
+    
         const confirmDelete = window.confirm("Are you sure you want to delete this patient?");
         if (!confirmDelete) return;
-
+    
+        // ✅ Remove the deleted patient before waiting for API
+        setPatients((prev) => prev.filter((patient) => patient.upid !== upid));
+    
         try {
-            const message = await deletePatient(id, accessToken);
-            toast.success(message, { position: "top-right", autoClose: 3000 });
-
-            // Remove the deleted patient from the list without reloading
-            setPatients((prev) => prev.filter((patient) => patient.id !== id));
+            await deletePatient(upid, accessToken);
+            toast.success("Patient deleted successfully.");
         } catch (error) {
-            toast.error("Error deleting patient: " + error.message, { position: "top-right", autoClose: 3000 });
+            toast.error("Error deleting patient: " + error.message);
         }
     };
-
-    const handleEdit = (patient: Patient) => {
+    
+    
+    const handleEdit = (patient: CreatePatient) => {
         setSelectedPatient(patient);
-        setEditFormData(patient); // Set current patient data to form
+        setEditFormData({ ...patient }); // Set current patient data to form
         setIsEditModalOpen(true);
     };
 
@@ -336,50 +336,58 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
         const { name, value } = e.target;
 
         setEditFormData((prev) => {
+            const updatedPrev = prev ?? {}; // Ensure 'prev' is always an object
+        
             if (name.startsWith("address.")) {
                 const addressField = name.split(".")[1];
                 return {
-                    ...prev,
+                    ...updatedPrev,
                     address: {
-                        ...prev.address,
+                        ...(updatedPrev.address ?? {}),
                         [addressField]: value,
                     },
                 };
             }
-
+        
             if (name.startsWith("contact.")) {
                 const contactField = name.split(".")[1];
                 return {
-                    ...prev,
+                    ...updatedPrev,
                     contact: {
-                        ...prev.contact,
+                        ...(updatedPrev.contact ?? {}),
                         [contactField]: value,
                     },
                 };
             }
-
-            return { ...prev, [name]: value };
+        
+            return { ...updatedPrev, [name]: value };
         });
+        
+        
     };
 
 
     const handleUpdate = async () => {
         if (!selectedPatient || !accessToken) return;
-
+    
+        // ✅ Optimistically update UI before API call
+        setPatients((prev) =>
+            prev.map((patient) =>
+                patient.upid === selectedPatient.upid ? { ...selectedPatient, ...editFormData } : patient
+            )
+        );
+    
+        setIsEditModalOpen(false);
+    
         try {
-            const updatedPatient = await updatePatient(selectedPatient.id, editFormData, accessToken);
-            // console.log(updatedPatient)
-            toast.success("Patient updated successfully.", { position: "top-right", autoClose: 3000 });
-
-            // ✅ Fetch updated data from backend
-            const updatedPatients = await fetchPatientsByNetwork(networkId, accessToken);
-            setPatients(updatedPatients);
-
-            setIsEditModalOpen(false);
+            await updatePatient(selectedPatient.upid, { ...editFormData }, accessToken);
+            toast.success("Patient updated successfully.");
         } catch (error: any) {
-            toast.error(error.message, { position: "top-right", autoClose: 3000 });
+            toast.error(error.message);
         }
     };
+    
+    
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value.toLowerCase()); // Case-insensitive search
@@ -430,31 +438,56 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
     };
 
     const handleCreatePatient = async () => {
-        if (!accessToken) {
-            toast.error("Unauthorized: No token found.");
-            return;
-        }
-
         try {
-            await createPatient(newPatientData as CreatePatient, accessToken);
-            toast.success("Patient created successfully.", {
-                position: "top-right",
-                autoClose: 3000,
-            });
-
-            // Fetch updated list
+            const patientData: CreatePatient = {
+                ...newPatientData,
+                address: {
+                    line1: newPatientData.address?.line1 ?? "",
+                    city: newPatientData.address?.city ?? "",
+                    state: newPatientData.address?.state ?? "",
+                    postalCode: newPatientData.address?.postalCode ?? "",
+                    country: newPatientData.address?.country ?? "",
+                },
+                contact: {
+                    email: newPatientData.contact?.email ?? "",
+                    phone: newPatientData.contact?.phone ?? "",
+                    mobilePhone: newPatientData.contact?.mobilePhone ?? "",
+                },
+                identifier: {
+                    aadhar: newPatientData.identifier?.aadhar ?? "",
+                    pan: newPatientData.identifier?.pan ?? "",
+                },
+            };
+    
+            const createdPatient = await createPatient(patientData, accessToken);
+            toast.success("Patient created successfully.");
+            
+            // ✅ Fetch fresh list instead of appending manually
             const updatedPatients = await fetchPatientsByNetwork(networkId, accessToken);
             setPatients(updatedPatients);
-
+    
             setIsCreateModalOpen(false);
         } catch (error: any) {
-            toast.error(error.message, {
-                position: "top-right",
-                autoClose: 3000,
-            });
+            toast.error(error.message);
         }
     };
-
+    
+    
+            const createdPatient = await createPatient(patientData, accessToken);
+            toast.success("Patient created successfully.");
+            
+            // ✅ Fetch fresh list instead of appending manually
+            const updatedPatients = await fetchPatientsByNetwork(networkId, accessToken);
+            setPatients(updatedPatients);
+    
+            setIsCreateModalOpen(false);
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    };
+    
+    
+      
 
     return (
         <div className="p-6 bg-white shadow-lg rounded-lg">
@@ -500,8 +533,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                         </thead>
                         <tbody>
                             {filteredPatients.map((patient) => (
-                                <tr key={patient.id} className="hover:bg-gray-50">
-                                    <td className="border border-gray-300 px-4 py-2">{patient.id}</td>
+                                <tr key={patient.upid} className="hover:bg-gray-50">
+                                    <td className="border border-gray-300 px-4 py-2">{patient.upid}</td>
                                     <td className="border border-gray-300 px-4 py-2">{patient.abha}</td>
                                     <td className="border border-gray-300 px-4 py-2">{patient.mrn}</td>
                                     <td className="border border-gray-300 px-4 py-2">{patient.nameGiven}</td>
@@ -511,7 +544,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                                     <td className="border border-gray-300 px-4 py-2">{patient.contact.phone}</td>
                                     <td className="border border-gray-300 px-4 py-2 flex space-x-2">
                                         <button
-                                            onClick={() => handleView(patient.id)}
+                                            onClick={() => handleView(patient.upid)}
                                             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
                                         >
                                             View
@@ -523,7 +556,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                                             Edit
                                         </button>
                                         <button
-                                            onClick={() => handleDelete(patient.id)}
+                                            onClick={() => handleDelete(patient.upid)}
                                             className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                                         >
                                             Delete
@@ -541,7 +574,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
                 <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 backdrop-blur-md p-6">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
                         <h2 className="text-xl font-bold mb-4 text-center">Patient Details</h2>
-                        <p><strong>ID:</strong> {selectedPatient.id}</p>
+                        <p><strong>UPID:</strong> {selectedPatient.upid}</p>
                         <p><strong>ABHA:</strong> {selectedPatient.abha}</p>
                         <p><strong>MRN:</strong> {selectedPatient.mrn}</p>
                         <p><strong>Name:</strong> {selectedPatient.nameGiven} {selectedPatient.nameFamily}</p>
@@ -703,7 +736,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId }) => {
 
                         {/* Buttons */}
                         <div className="flex justify-end space-x-3 mt-6">
-                            <button onClick={handleCreatePatient} className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
+                            <button className="px-5 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create</button>
                             <button onClick={() => setIsCreateModalOpen(false)} className="px-5 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Cancel</button>
                         </div>
                     </div>
