@@ -93,18 +93,9 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
     };
 
     const filteredPatients = patients.filter((patient) => {
-        const searchLower = searchTerm.toLowerCase();
         const fullName = `${patient.namePrefix} ${patient.nameGiven} ${patient.nameMiddle || ""} ${patient.nameFamily}`.trim().toLowerCase();
-        
-        return (
-            fullName.includes(searchLower) || 
-            patient.genderIdentity.toLowerCase().includes(searchLower) || 
-            patient.contact.phone.toLowerCase().includes(searchLower) || 
-            patient.upid.toLowerCase().includes(searchLower) || 
-            patient.mrn.toLowerCase().includes(searchLower)
-        );
+        return fullName.includes(searchTerm.toLowerCase());
     });
-    
 
 
     return (
@@ -113,7 +104,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                 <div>
                     <input
                         type="text"
-                        placeholder="Search by name, gender, phone, UPID, or MRN"
+                        placeholder="Search by name"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)} 
                         className="w-full p-2 border border-gray-300 rounded"

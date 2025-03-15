@@ -95,8 +95,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 backdrop-blur-sm p-6 w-full h-full">
-            <div className="bg-white mt-20 p-6 rounded-lg shadow-xl border border-gray-300 w-[90vw] max-h-[90vh] overflow-y-auto">
-                <h2 className=" text-center text-xl font-semibold mb-4">Create Patient</h2>
+            <div className="bg-white p-6 rounded-lg shadow-xl border border-gray-300 w-[90vw] max-h-[90vh] overflow-y-auto">
+                <h2 className=" texttext-xl font-semibold mb-4">Create Patient</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Disabled Network ID */}
                     <div>
@@ -106,7 +106,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="networkId"
                             value={networkId}
                             disabled
-                            className="w-full p-2 border border-gray-300 rounded bg-gray-100 cursor-not-allowed"
+                            className="w-full p-2 border border-gray-300 rounded bg-gray-100"
                         />
                     </div>
 
@@ -117,7 +117,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="upid"
                             value={formData.upid}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             required
                         />
                     </div>
@@ -130,7 +130,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="abha"
                             value={formData.abha}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             required
                         />
                     </div>
@@ -143,7 +143,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="mrn"
                             value={formData.mrn}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             required
                         />
                     </div>
@@ -158,7 +158,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 name={field}
                                 value={formData[field as keyof Omit<Patient, "id">] as string}
                                 onChange={handleChange}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             />
                         </div>
                     ))}
@@ -172,7 +172,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 name={field}
                                 value={formData.identifier[field as keyof Patient["identifier"]]}
                                 onChange={(e) => handleNestedChange(e, "identifier")}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             />
                         </div>
                     ))}
@@ -185,7 +185,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="birthDate"
                             value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
                     <div>
@@ -198,7 +198,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 ...prev,
                                 deathDate: e.target.value ? e.target.value : null,
                             }))}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
 
@@ -210,7 +210,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 name={field}
                                 value={formData[field as keyof Omit<Patient, "id">] as string}
                                 onChange={handleChange}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             >
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -228,7 +228,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 name={field}
                                 value={formData.address[field as keyof Patient["address"]]}
                                 onChange={(e) => handleNestedChange(e, "address")}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             />
                         </div>
                     ))}
@@ -242,7 +242,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 name={field}
                                 value={formData.contact[field as keyof Patient["contact"]]}
                                 onChange={(e) => handleNestedChange(e, "contact")}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             />
                         </div>
                     ))}
@@ -255,7 +255,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                 type="text"
                                 value={contact}
                                 onChange={(e) => handleArrayChange(index, e.target.value)}
-                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                className="w-full p-2 border border-gray-300 rounded"
                             />
                         </div>
                     ))}
@@ -268,7 +268,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="preferredLanguage"
                             value={formData.preferredLanguage}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
                     <div>
@@ -278,7 +278,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="preferredPharmacy"
                             value={formData.preferredPharmacy || ""}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             placeholder="Enter UUID"
                         />
                     </div>
@@ -290,7 +290,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="primaryCareProvider"
                             value={formData.primaryCareProvider || ""}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             placeholder="Enter UUID"
                         />
                     </div>

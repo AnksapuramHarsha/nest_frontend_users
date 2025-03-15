@@ -16,7 +16,6 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [isEditing, setIsEditing] = useState<boolean>(false);
-    const [searchTerm, setSearchTerm] = useState<string>("");
     const [editData, setEditData] = useState<Partial<Patient>>({
         contact: {
             email: "",
@@ -92,20 +91,6 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
         }
     };
 
-    const filteredPatients = patients.filter((patient) => {
-        const searchLower = searchTerm.toLowerCase();
-        const fullName = `${patient.namePrefix} ${patient.nameGiven} ${patient.nameMiddle || ""} ${patient.nameFamily}`.trim().toLowerCase();
-        
-        return (
-            fullName.includes(searchLower) || 
-            patient.genderIdentity.toLowerCase().includes(searchLower) || 
-            patient.contact.phone.toLowerCase().includes(searchLower) || 
-            patient.upid.toLowerCase().includes(searchLower) || 
-            patient.mrn.toLowerCase().includes(searchLower)
-        );
-    });
-    
-
 
     return (
         <div>
@@ -113,9 +98,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                 <div>
                     <input
                         type="text"
-                        placeholder="Search by name, gender, phone, UPID, or MRN"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)} 
+                        placeholder="Search by name"
+                        value={sear}
                         className="w-full p-2 border border-gray-300 rounded"
                     />
                 </div>
@@ -137,7 +121,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                     <p className="text-gray-500">No patients found.</p>
                 )}
 
-                {!loading && !error && filteredPatients.length > 0 && (
+                {!loading && !error && patients.length > 0 && (
                     <table className="min-w-full border-collapse border border-gray-300">
                         <thead>
                             <tr className="bg-gray-100">
@@ -152,7 +136,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredPatients.map((patient) => (
+                            {patients.map((patient) => (
                                 <tr key={patient.upid} className="border">
                                     <td className="border p-2">{patient.upid}</td>
                                     <td className="border p-2">

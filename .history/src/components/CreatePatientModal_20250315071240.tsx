@@ -278,7 +278,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="preferredPharmacy"
                             value={formData.preferredPharmacy || ""}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             placeholder="Enter UUID"
                         />
                     </div>
@@ -290,7 +290,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             name="primaryCareProvider"
                             value={formData.primaryCareProvider || ""}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            className="w-full p-2 border border-gray-300 rounded"
                             placeholder="Enter UUID"
                         />
                     </div>

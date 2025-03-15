@@ -113,7 +113,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                 <div>
                     <input
                         type="text"
-                        placeholder="Search by name, gender, phone, UPID, or MRN"
+                        placeholder="Search by name"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)} 
                         className="w-full p-2 border border-gray-300 rounded"
