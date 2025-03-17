@@ -41,10 +41,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
             try {
                 const data: Patient[] = await getPatients(networkId, accessToken);
                 setPatients(data);
-                toast.success("Patients loaded successfully! ✅");
             } catch (err) {
                 setError("Failed to fetch patients.");
-                toast.error("Error fetching patients. ❌");
             } finally {
                 setLoading(false);
             }

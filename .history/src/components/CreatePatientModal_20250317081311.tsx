@@ -266,21 +266,21 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                     <div>
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-4">
-                            {Object.keys(formData.contact).map((field) => (
-                                <div key={field}>
-                                    <label className="block capitalize">{field}</label>
-                                    <input
-                                        type="text"
-                                        name={field}
-                                        value={formData.contact[field as keyof Patient["contact"]]}
-                                        onChange={(e) => handleNestedChange(e, "contact")}
-                                        className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    />
-                                </div>
-                            ))}
+                        {Object.keys(formData.contact).map((field) => (
+                        <div key={field}>
+                            <label className="block capitalize">{field}</label>
+                            <input
+                                type="text"
+                                name={field}
+                                value={formData.contact[field as keyof Patient["contact"]]}
+                                onChange={(e) => handleNestedChange(e, "contact")}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            />
+                        </div>
+                    ))}
                         </div>
                     </div>
-
+                    
 
                     {/* Emergency Contacts */}
                     {formData.emergencyContacts?.map((contact, index) => (
@@ -307,34 +307,28 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                         />
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Medical Preferences</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block">Preferred Pharmacy (UUID)</label>
-                                <input
-                                    type="text"
-                                    name="preferredPharmacy"
-                                    value={formData.preferredPharmacy || ""}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    placeholder="Enter UUID"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block">Primary Care Provider (UUID)</label>
-                                <input
-                                    type="text"
-                                    name="primaryCareProvider"
-                                    value={formData.primaryCareProvider || ""}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    placeholder="Enter UUID"
-                                />
-                            </div>
-                        </div>
+                        <label className="block">Preferred Pharmacy (UUID)</label>
+                        <input
+                            type="text"
+                            name="preferredPharmacy"
+                            value={formData.preferredPharmacy || ""}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter UUID"
+                        />
                     </div>
 
+                    <div>
+                        <label className="block">Primary Care Provider (UUID)</label>
+                        <input
+                            type="text"
+                            name="primaryCareProvider"
+                            value={formData.primaryCareProvider || ""}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter UUID"
+                        />
+                    </div>
 
                     <div className="flex items-center">
                         <input

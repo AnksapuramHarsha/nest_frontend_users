@@ -174,113 +174,91 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                         </div>
                     </div>
 
-                    <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Identifiers</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            {["aadhar", "pan"].map((field) => (
-                                <div key={field}>
-                                    <label className="block capitalize">{field}</label>
-                                    <input
-                                        type="text"
-                                        name={field}
-                                        value={formData.identifier[field as keyof Patient["identifier"]]}
-                                        onChange={(e) => handleNestedChange(e, "identifier")}
-                                        className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    />
-                                </div>
-                            ))}
+                    
+
+                    {/* Identifiers */}
+                    {["aadhar", "pan"].map((field) => (
+                        <div key={field}>
+                            <label className="block capitalize">{field}</label>
+                            <input
+                                type="text"
+                                name={field}
+                                value={formData.identifier[field as keyof Patient["identifier"]]}
+                                onChange={(e) => handleNestedChange(e, "identifier")}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            />
                         </div>
-                    </div>
+                    ))}
 
                     {/* Birth & Death Dates */}
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Demographics</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block">Birth Date</label>
-                                <input
-                                    type="date"
-                                    name="birthDate"
-                                    value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                            </div>
-                            <div>
-                                <label className="block">Death Date</label>
-                                <input
-                                    type="date"
-                                    name="deathDate"
-                                    value={formData.deathDate ? new Date(formData.deathDate).toISOString().split("T")[0] : ""}
-                                    onChange={(e) => setFormData((prev) => ({
-                                        ...prev,
-                                        deathDate: e.target.value ? e.target.value : null,
-                                    }))}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                            </div>
-                        </div>
+                        <label className="block">Birth Date</label>
+                        <input
+                            type="date"
+                            name="birthDate"
+                            value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                        />
                     </div>
-
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Gender Information</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            {["genderIdentity", "biologicalSex"].map((field) => (
-                                <div key={field}>
-                                    <label className="block capitalize">{field.replace(/([A-Z])/g, " $1")}</label>
-                                    <select
-                                        name={field}
-                                        value={formData[field as keyof Omit<Patient, "id">] as string}
-                                        onChange={handleChange}
-                                        className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    >
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                    </select>
-                                </div>
-                            ))}
-
-                        </div>
+                        <label className="block">Death Date</label>
+                        <input
+                            type="date"
+                            name="deathDate"
+                            value={formData.deathDate ? new Date(formData.deathDate).toISOString().split("T")[0] : ""}
+                            onChange={(e) => setFormData((prev) => ({
+                                ...prev,
+                                deathDate: e.target.value ? e.target.value : null,
+                            }))}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                        />
                     </div>
 
-                    <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Address</h3>
-                        <div className="grid grid-cols-2 gap-4">
-
-                            {Object.keys(formData.address).map((field) => (
-                                <div key={field}>
-                                    <label className="block capitalize">{field}</label>
-                                    <input
-                                        type="text"
-                                        name={field}
-                                        value={formData.address[field as keyof Patient["address"]]}
-                                        onChange={(e) => handleNestedChange(e, "address")}
-                                        className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    />
-                                </div>
-                            ))}
+                    {/* Gender & Sex */}
+                    {["genderIdentity", "biologicalSex"].map((field) => (
+                        <div key={field}>
+                            <label className="block capitalize">{field.replace(/([A-Z])/g, " $1")}</label>
+                            <select
+                                name={field}
+                                value={formData[field as keyof Omit<Patient, "id">] as string}
+                                onChange={handleChange}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
                         </div>
-                    </div>
+                    ))}
 
-                    <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Contact Information</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            {Object.keys(formData.contact).map((field) => (
-                                <div key={field}>
-                                    <label className="block capitalize">{field}</label>
-                                    <input
-                                        type="text"
-                                        name={field}
-                                        value={formData.contact[field as keyof Patient["contact"]]}
-                                        onChange={(e) => handleNestedChange(e, "contact")}
-                                        className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    />
-                                </div>
-                            ))}
+                    {/* Address */}
+                    {Object.keys(formData.address).map((field) => (
+                        <div key={field}>
+                            <label className="block capitalize">{field}</label>
+                            <input
+                                type="text"
+                                name={field}
+                                value={formData.address[field as keyof Patient["address"]]}
+                                onChange={(e) => handleNestedChange(e, "address")}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            />
                         </div>
-                    </div>
+                    ))}
 
+                    {/* Contact */}
+                    {Object.keys(formData.contact).map((field) => (
+                        <div key={field}>
+                            <label className="block capitalize">{field}</label>
+                            <input
+                                type="text"
+                                name={field}
+                                value={formData.contact[field as keyof Patient["contact"]]}
+                                onChange={(e) => handleNestedChange(e, "contact")}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            />
+                        </div>
+                    ))}
 
                     {/* Emergency Contacts */}
                     {formData.emergencyContacts?.map((contact, index) => (
@@ -307,34 +285,28 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                         />
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Medical Preferences</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block">Preferred Pharmacy (UUID)</label>
-                                <input
-                                    type="text"
-                                    name="preferredPharmacy"
-                                    value={formData.preferredPharmacy || ""}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    placeholder="Enter UUID"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block">Primary Care Provider (UUID)</label>
-                                <input
-                                    type="text"
-                                    name="primaryCareProvider"
-                                    value={formData.primaryCareProvider || ""}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                    placeholder="Enter UUID"
-                                />
-                            </div>
-                        </div>
+                        <label className="block">Preferred Pharmacy (UUID)</label>
+                        <input
+                            type="text"
+                            name="preferredPharmacy"
+                            value={formData.preferredPharmacy || ""}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter UUID"
+                        />
                     </div>
 
+                    <div>
+                        <label className="block">Primary Care Provider (UUID)</label>
+                        <input
+                            type="text"
+                            name="primaryCareProvider"
+                            value={formData.primaryCareProvider || ""}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            placeholder="Enter UUID"
+                        />
+                    </div>
 
                     <div className="flex items-center">
                         <input

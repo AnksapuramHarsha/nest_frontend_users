@@ -41,10 +41,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
             try {
                 const data: Patient[] = await getPatients(networkId, accessToken);
                 setPatients(data);
-                toast.success("Patients loaded successfully! ✅");
             } catch (err) {
                 setError("Failed to fetch patients.");
-                toast.error("Error fetching patients. ❌");
             } finally {
                 setLoading(false);
             }
@@ -67,7 +65,7 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
         try {
             await deletePatient(patientId, accessToken);
             setPatients(patients.filter((p) => p.id !== patientId)); // ✅ Remove patient from list
-            toast.success("Patient deleted successfully! ✅");
+            alert("Patient deleted successfully!"); // ✅ Optional: Show success alert
         } catch (error) {
             alert("Failed to delete patient.");
         }
@@ -90,9 +88,8 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
             setPatients(patients.map((p) => (p.id === updatedPatient.id ? updatedPatient : p))); // ✅ Update state
             setIsEditing(false);
             setSelectedPatient(null);
-            toast.success("Patient updated successfully! ✅");
         } catch (error) {
-            toast.error("Failed to update patient.");
+            alert("Failed to update patient.");
         }
     };
 

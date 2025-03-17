@@ -44,7 +44,6 @@ const PatientList: React.FC<PatientListProps> = ({ networkId, accessToken }) => 
                 toast.success("Patients loaded successfully! ✅");
             } catch (err) {
                 setError("Failed to fetch patients.");
-                toast.error("Error fetching patients. ❌");
             } finally {
                 setLoading(false);
             }
