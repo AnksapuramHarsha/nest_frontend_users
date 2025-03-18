@@ -96,7 +96,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
     const removeEmergencyContact = (index: number) => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).filter((_, i) => i !== index),
+            emergencyContacts: prev.emergencyContacts.filter((_, i) => i !== index),
         }));
     };
 
@@ -326,7 +326,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
 
                     <div>
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Emergency Contacts</h3>
-                        {(formData.emergencyContacts??[]).map((contact, index) => (
+                        {formData.emergencyContacts.map((contact, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
                                 <input
                                     type="text"

@@ -41,7 +41,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         maritalStatus: "",
         race: {},
         ethnicity: "",
-        emergencyContacts: [] as { name: string; relationship: string; phone: string }[],
+        emergencyContacts: [],
         preferredPharmacy: null,
         primaryCareProvider: null,
         active: true,
@@ -71,35 +71,28 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         }));
     };
 
-    const handleEmergencyContactChange = (
-        index: number,
-        field: keyof { name: string; relationship: string; phone: string },
-        value: string
-    ) => {
+    const handleEmergencyContactChange = (index: number, value: string) => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).map((contact, i) =>
-                i === index ? { ...contact, [field]: value } : contact
+            emergencyContacts: prev.emergencyContacts.map((contact, i) =>
+                i === index ? value : contact
             ),
         }));
     };
 
-
     const addEmergencyContact = () => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: [...(prev.emergencyContacts??[]), { name: "", relationship: "", phone: "" }],
+            emergencyContacts: [...prev.emergencyContacts, ""], // Add empty input for new contact
         }));
     };
-
 
     const removeEmergencyContact = (index: number) => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).filter((_, i) => i !== index),
+            emergencyContacts: prev.emergencyContacts.filter((_, i) => i !== index),
         }));
     };
-
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -326,28 +319,15 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
 
                     <div>
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Emergency Contacts</h3>
-                        {(formData.emergencyContacts??[]).map((contact, index) => (
+                        {formData.emergencyContacts??.map((contact, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
                                 <input
                                     type="text"
-                                    placeholder="Name"
-                                    value={contact.name}
-                                    onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Relationship"
-                                    value={contact.relationship}
-                                    onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Phone"
-                                    value={contact.phone}
-                                    onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
+                                    name={`emergencyContact-${index}`}
+                                    value={contact}
+                                    onChange={(e) => handleEmergencyContactChange(index, e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                                    placeholder="Enter emergency contact"
                                 />
                                 <button
                                     type="button"
@@ -366,7 +346,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                             Add Contact
                         </button>
                     </div>
-
 
 
                     {/* Preferred Language & Organ Donor */}

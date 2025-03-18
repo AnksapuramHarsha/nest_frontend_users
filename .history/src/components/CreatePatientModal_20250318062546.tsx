@@ -78,28 +78,26 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
     ) => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).map((contact, i) =>
+            emergencyContacts: prev.emergencyContacts.map((contact, i) =>
                 i === index ? { ...contact, [field]: value } : contact
             ),
         }));
     };
-
+    
 
     const addEmergencyContact = () => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: [...(prev.emergencyContacts??[]), { name: "", relationship: "", phone: "" }],
+            emergencyContacts: [...(prev.emergencyContacts||[]), ""], // Add empty input for new contact
         }));
     };
-
 
     const removeEmergencyContact = (index: number) => {
         setFormData((prev) => ({
             ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).filter((_, i) => i !== index),
+            emergencyContacts: (prev.emergencyContacts||[]).filter((_, i) => i !== index),
         }));
     };
-
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -325,47 +323,47 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
 
 
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Emergency Contacts</h3>
-                        {(formData.emergencyContacts??[]).map((contact, index) => (
-                            <div key={index} className="flex items-center gap-2 mb-2">
-                                <input
-                                    type="text"
-                                    placeholder="Name"
-                                    value={contact.name}
-                                    onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Relationship"
-                                    value={contact.relationship}
-                                    onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Phone"
-                                    value={contact.phone}
-                                    onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => removeEmergencyContact(index)}
-                                    className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={addEmergencyContact}
-                            className="mt-2 p-2 bg-green-500 text-white rounded hover:bg-green-600"
-                        >
-                            Add Contact
-                        </button>
-                    </div>
+    <h3 className="text-lg font-semibold border-b pb-2 mb-4">Emergency Contacts</h3>
+    {formData.emergencyContacts.map((contact, index) => (
+        <div key={index} className="flex items-center gap-2 mb-2">
+            <input
+                type="text"
+                placeholder="Name"
+                value={contact.name}
+                onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
+                className="w-1/3 p-2 border border-gray-300 rounded"
+            />
+            <input
+                type="text"
+                placeholder="Relationship"
+                value={contact.relationship}
+                onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
+                className="w-1/3 p-2 border border-gray-300 rounded"
+            />
+            <input
+                type="text"
+                placeholder="Phone"
+                value={contact.phone}
+                onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
+                className="w-1/3 p-2 border border-gray-300 rounded"
+            />
+            <button
+                type="button"
+                onClick={() => removeEmergencyContact(index)}
+                className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+            >
+                Remove
+            </button>
+        </div>
+    ))}
+    <button
+        type="button"
+        onClick={addEmergencyContact}
+        className="mt-2 p-2 bg-green-500 text-white rounded hover:bg-green-600"
+    >
+        Add Contact
+    </button>
+</div>
 
 
 

@@ -20,13 +20,6 @@ export interface Identifier {
   pan: string;
 }
 
-export interface EmergencyContact {
-  name: string;
-  relationship: string;
-  phone: string;
-}
-
-
 export interface Patient {
   id:string;
   networkId: string; // Disabled in UI

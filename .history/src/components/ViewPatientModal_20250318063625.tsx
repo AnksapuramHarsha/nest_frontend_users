@@ -48,13 +48,7 @@ const ViewPatientModal: React.FC<ViewPatientModalProps> = ({ patient, onClose })
           <h3 className="font-semibold mt-4">Additional Information</h3>
           <p><strong>Marital Status:</strong> {patient.maritalStatus || "N/A"}</p>
           <p><strong>Ethnicity:</strong> {patient.ethnicity || "N/A"}</p>
-          <p><strong>Emergency Contacts:</strong> {patient.emergencyContacts?.length
-            ? patient.emergencyContacts.map((contact, index) => (
-              <span key={index}>{typeof contact === "string" ? contact : JSON.stringify(contact)}</span>
-            ))
-            : "N/A"}
-          </p>
-
+          
         </div>
 
         <div className="flex justify-end mt-4">

@@ -17,11 +17,7 @@ export const createPatient = async (patientData: Omit<Patient,"id">,accessToken:
     });
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      console.error("API Validation Error:", error.response.data);
-      throw new Error(`API Error: ${JSON.stringify(error.response.data, null, 2)}`);
-    }
-    console.error("Unexpected API Error:", error);
+    console.error("Error creating patient:", error);
     throw error;
   }
 };

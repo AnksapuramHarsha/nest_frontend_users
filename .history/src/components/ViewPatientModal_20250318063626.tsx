@@ -49,11 +49,11 @@ const ViewPatientModal: React.FC<ViewPatientModalProps> = ({ patient, onClose })
           <p><strong>Marital Status:</strong> {patient.maritalStatus || "N/A"}</p>
           <p><strong>Ethnicity:</strong> {patient.ethnicity || "N/A"}</p>
           <p><strong>Emergency Contacts:</strong> {patient.emergencyContacts?.length
-            ? patient.emergencyContacts.map((contact, index) => (
-              <span key={index}>{typeof contact === "string" ? contact : JSON.stringify(contact)}</span>
-            ))
-            : "N/A"}
-          </p>
+  ? patient.emergencyContacts.map((contact, index) => (
+      <span key={index}>{typeof contact === "string" ? contact : JSON.stringify(contact)}</span>
+    ))
+  : "N/A"}
+</p>
 
         </div>
 

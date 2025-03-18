@@ -41,7 +41,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         maritalStatus: "",
         race: {},
         ethnicity: "",
-        emergencyContacts: [] as { name: string; relationship: string; phone: string }[],
+        emergencyContacts: [],
         preferredPharmacy: null,
         primaryCareProvider: null,
         active: true,
@@ -71,36 +71,11 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         }));
     };
 
-    const handleEmergencyContactChange = (
-        index: number,
-        field: keyof { name: string; relationship: string; phone: string },
-        value: string
-    ) => {
-        setFormData((prev) => ({
-            ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).map((contact, i) =>
-                i === index ? { ...contact, [field]: value } : contact
-            ),
-        }));
+    const handleArrayChange = (index: number, value: string) => {
+        const updatedContacts = [...(formData.emergencyContacts || [])];
+        updatedContacts[index] = value;
+        setFormData((prev) => ({ ...prev, emergencyContacts: updatedContacts }));
     };
-
-
-    const addEmergencyContact = () => {
-        setFormData((prev) => ({
-            ...prev,
-            emergencyContacts: [...(prev.emergencyContacts??[]), { name: "", relationship: "", phone: "" }],
-        }));
-    };
-
-
-    const removeEmergencyContact = (index: number) => {
-        setFormData((prev) => ({
-            ...prev,
-            emergencyContacts: (prev.emergencyContacts??[]).filter((_, i) => i !== index),
-        }));
-    };
-
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -324,50 +299,18 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                     </div>
 
 
-                    <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Emergency Contacts</h3>
-                        {(formData.emergencyContacts??[]).map((contact, index) => (
-                            <div key={index} className="flex items-center gap-2 mb-2">
-                                <input
-                                    type="text"
-                                    placeholder="Name"
-                                    value={contact.name}
-                                    onChange={(e) => handleEmergencyContactChange(index, "name", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Relationship"
-                                    value={contact.relationship}
-                                    onChange={(e) => handleEmergencyContactChange(index, "relationship", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <input
-                                    type="text"
-                                    placeholder="Phone"
-                                    value={contact.phone}
-                                    onChange={(e) => handleEmergencyContactChange(index, "phone", e.target.value)}
-                                    className="w-1/3 p-2 border border-gray-300 rounded"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() => removeEmergencyContact(index)}
-                                    className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))}
-                        <button
-                            type="button"
-                            onClick={addEmergencyContact}
-                            className="mt-2 p-2 bg-green-500 text-white rounded hover:bg-green-600"
-                        >
-                            Add Contact
-                        </button>
-                    </div>
-
-
+                    {/* Emergency Contacts */}
+                    {formData.emergencyContacts?.map((contact, index) => (
+                        <div key={index}>
+                            <label className="block">Emergency Contact {index + 1}</label>
+                            <input
+                                type="text"
+                                value={contact}
+                                onChange={(e) => handleArrayChange(index, e.target.value)}
+                                className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
+                            />
+                        </div>
+                    ))}
 
                     {/* Preferred Language & Organ Donor */}
                     <div>

@@ -38,7 +38,7 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>(""); // To show registration errors
   const navigate = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -281,6 +281,7 @@ const Register: React.FC = () => {
               id="role"
               name="role"
               value={formData.role}
+              @ts-ignore
               onChange={handleInputChange}
               className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
             >

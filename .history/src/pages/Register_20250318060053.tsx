@@ -38,7 +38,7 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>(""); // To show registration errors
   const navigate = useNavigate();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
