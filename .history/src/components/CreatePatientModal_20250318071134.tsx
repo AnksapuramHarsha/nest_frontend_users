@@ -70,6 +70,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                 : "",
         }));
     }
+
+    
     };
 
     const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {

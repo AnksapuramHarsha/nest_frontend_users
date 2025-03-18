@@ -406,7 +406,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                {errors.preferredPharmacy && <p className="text-red-500 text-sm">{errors.preferredPharmacy}</p>}
                             </div>
 
                             <div>
@@ -419,7 +418,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                 {errors.primaryCareProvider && <p className="text-red-500 text-sm">{errors.primaryCareProvider}</p>}
                             </div>
                         </div>
                     </div>

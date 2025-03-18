@@ -53,6 +53,30 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        if (!formData.upid.trim()) newErrors.upid = "UPID is required";
+        if (!formData.abha.trim()) newErrors.abha = "ABHA Number is required";
+        if (!formData.mrn.trim()) newErrors.mrn = "MRN is required";
+        if (!formData.nameGiven.trim()) newErrors.nameGiven = "First name is required";
+        if (!formData.nameFamily.trim()) newErrors.nameFamily = "Last name is required";
+        if (!formData.birthDate) newErrors.birthDate = "Birth date is required";
+        if (!formData.address.line1.trim()) newErrors.addressLine1 = "Address Line 1 is required";
+        if (!formData.address.city.trim()) newErrors.city = "City is required";
+        if (!formData.address.state.trim()) newErrors.state = "State is required";
+        if (!formData.address.postalCode.trim()) newErrors.postalCode = "Postal Code is required";
+        if (!formData.address.country.trim()) newErrors.country = "Country is required";
+        if (!formData.contact.email.trim()) newErrors.email = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(formData.contact.email)) newErrors.email = "Invalid email format";
+        if (!formData.contact.phone.trim()) newErrors.phone = "Phone number is required";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // ✅ Returns true if no errors
+    };
+
+
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const checked = e.target instanceof HTMLInputElement ? e.target.checked : false;
@@ -60,16 +84,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
-         // ✅ UUID Validation for preferredPharmacy & primaryCareProvider
-    if (name === "preferredPharmacy" || name === "primaryCareProvider") {
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        setErrors((prev) => ({
-            ...prev,
-            [name]: value && !uuidRegex.test(value) 
-                ? "Invalid UUID format. Example: 550e8400-e29b-41d4-a716-446655440000"
-                : "",
-        }));
-    }
     };
 
     const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {
@@ -257,7 +271,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     name="birthDate"
                                     value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
                                     onChange={handleChange}
-                                    max={new Date().toISOString().split("T")[0]}
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                 />
                             </div>
@@ -406,7 +419,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                {errors.preferredPharmacy && <p className="text-red-500 text-sm">{errors.preferredPharmacy}</p>}
                             </div>
 
                             <div>
@@ -419,7 +431,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                 {errors.primaryCareProvider && <p className="text-red-500 text-sm">{errors.primaryCareProvider}</p>}
                             </div>
                         </div>
                     </div>

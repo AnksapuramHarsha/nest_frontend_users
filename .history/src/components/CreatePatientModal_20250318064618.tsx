@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { createPatient } from "../apis/patientApi";
 import { Patient } from "../types/createPatient";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 interface CreatePatientModalProps {
     networkId: string;
@@ -8,6 +11,38 @@ interface CreatePatientModalProps {
     onClose: () => void;
     refreshPatients: () => void;
 }
+
+// ✅ Yup Validation Schema
+const schema = yup.object().shape({
+    upid: yup.string().required("UPID is required"),
+    abha: yup.string().required("ABHA No. is required"),
+    mrn: yup.string().required("MRN is required"),
+    namePrefix: yup.string().required("Prefix is required"),
+    nameGiven: yup.string().required("First Name is required"),
+    nameFamily: yup.string().required("Last Name is required"),
+    birthDate: yup.date().required("Birth Date is required").typeError("Invalid Date"),
+    genderIdentity: yup.string().oneOf(["male", "female", "other"], "Invalid Gender").required("Gender is required"),
+    biologicalSex: yup.string().oneOf(["male", "female", "other"], "Invalid Biological Sex").required("Biological Sex is required"),
+    address: yup.object().shape({
+        line1: yup.string().required("Address Line 1 is required"),
+        city: yup.string().required("City is required"),
+        state: yup.string().required("State is required"),
+        postalCode: yup.string().required("Postal Code is required"),
+        country: yup.string().required("Country is required"),
+    }),
+    contact: yup.object().shape({
+        email: yup.string().email("Invalid email format").required("Email is required"),
+        phone: yup.string().required("Phone is required"),
+        mobilePhone: yup.string().nullable(),
+    }),
+    emergencyContacts: yup.array().of(
+        yup.object().shape({
+            name: yup.string().required("Name is required"),
+            relationship: yup.string().required("Relationship is required"),
+            phone: yup.string().required("Phone is required"),
+        })
+    ),
+});
 
 const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, accessToken, onClose, refreshPatients }) => {
     const [formData, setFormData] = useState<Omit<Patient, "id">>({
@@ -51,8 +86,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
         advanceDirectives: {},
     });
 
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         const checked = e.target instanceof HTMLInputElement ? e.target.checked : false;
@@ -60,16 +93,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
-         // ✅ UUID Validation for preferredPharmacy & primaryCareProvider
-    if (name === "preferredPharmacy" || name === "primaryCareProvider") {
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        setErrors((prev) => ({
-            ...prev,
-            [name]: value && !uuidRegex.test(value) 
-                ? "Invalid UUID format. Example: 550e8400-e29b-41d4-a716-446655440000"
-                : "",
-        }));
-    }
     };
 
     const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {
@@ -257,7 +280,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     name="birthDate"
                                     value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
                                     onChange={handleChange}
-                                    max={new Date().toISOString().split("T")[0]}
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                 />
                             </div>
@@ -406,7 +428,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                {errors.preferredPharmacy && <p className="text-red-500 text-sm">{errors.preferredPharmacy}</p>}
                             </div>
 
                             <div>
@@ -419,7 +440,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                 {errors.primaryCareProvider && <p className="text-red-500 text-sm">{errors.primaryCareProvider}</p>}
                             </div>
                         </div>
                     </div>

@@ -70,6 +70,13 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                 : "",
         }));
     }
+
+    if (["namePrefix", "nameGiven", "nameFamily", "preferredName"].includes(name)) {
+        setErrors((prev) => ({
+            ...prev,
+            [name]: value.trim() === "" ? `${name.replace(/([A-Z])/g, " $1")} is required.` : "",
+        }));
+    }
     };
 
     const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {
@@ -222,6 +229,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                             className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                         />
                                     )}
+                                    {errors[field] && <p className="text-red-500 text-sm">{errors[field]}</p>}
                                 </div>
                             ))}
                         </div>

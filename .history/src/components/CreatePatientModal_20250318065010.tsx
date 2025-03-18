@@ -60,16 +60,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
             ...prev,
             [name]: type === "checkbox" ? checked : value,
         }));
-         // ✅ UUID Validation for preferredPharmacy & primaryCareProvider
-    if (name === "preferredPharmacy" || name === "primaryCareProvider") {
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-        setErrors((prev) => ({
-            ...prev,
-            [name]: value && !uuidRegex.test(value) 
-                ? "Invalid UUID format. Example: 550e8400-e29b-41d4-a716-446655440000"
-                : "",
-        }));
-    }
     };
 
     const handleNestedChange = (e: React.ChangeEvent<HTMLInputElement>, section: keyof Omit<Patient, "id">) => {
@@ -257,7 +247,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     name="birthDate"
                                     value={formData.birthDate ? new Date(formData.birthDate).toISOString().split("T")[0] : ""}
                                     onChange={handleChange}
-                                    max={new Date().toISOString().split("T")[0]}
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                 />
                             </div>
@@ -406,7 +395,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                {errors.preferredPharmacy && <p className="text-red-500 text-sm">{errors.preferredPharmacy}</p>}
                             </div>
 
                             <div>
@@ -419,7 +407,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ networkId, acce
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                     placeholder="Enter UUID"
                                 />
-                                 {errors.primaryCareProvider && <p className="text-red-500 text-sm">{errors.primaryCareProvider}</p>}
                             </div>
                         </div>
                     </div>
