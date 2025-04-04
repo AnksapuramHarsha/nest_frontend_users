@@ -257,23 +257,23 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <input type="text" name="state" value={formData.address.state} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
 
                             <label className="block">Postal Code:</label>
-                            <input type="text" name="postalCode" value={formData.address.postalCode} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
+                            <input type="text" name="postalCode" value={formData.address.postalCode} onChange={(e) => handleNestedChange(e, "address")} />
 
                             <label className="block">Country:</label>
-                            <input type="text" name="country" value={formData.address.country} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
+                            <input type="text" name="country" value={formData.address.country} onChange={(e) => handleNestedChange(e, "address")} />
                         </div>
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Contact Information</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <label className="block">Email:</label>
-                            <input type="email" name="email" value={formData.contact.email} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
+                            <input type="email" name="email" value={formData.contact.email} onChange={(e) => handleNestedChange(e, "contact")} />
 
                             <label className="block">Phone:</label>
-                            <input type="text" name="phone" value={formData.contact.phone} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
+                            <input type="text" name="phone" value={formData.contact.phone} onChange={(e) => handleNestedChange(e, "contact")} />
 
                             <label className="block">Mobile Phone:</label>
-                            <input type="text" name="mobilePhone" value={formData.contact.mobilePhone} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
+                            <input type="text" name="mobilePhone" value={formData.contact.mobilePhone} onChange={(e) => handleNestedChange(e, "contact")} />
                         </div>
                     </div>
                     <div>
@@ -318,10 +318,10 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Preferences</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <label className="block">Contact Method:</label>
-                            <input type="text" name="contactMethod" value={formData.preferences.contactMethod} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "preferences")} />
+                            <input type="text" name="contactMethod" value={formData.preferences.contactMethod} onChange={(e) => handleNestedChange(e, "preferences")} />
 
                             <label className="block">Appointment Reminders:</label>
-                            <select name="appointmentReminders" value={formData.preferences.appointmentReminders ? "true" : "false"} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "preferences")}>
+                            <select name="appointmentReminders" value={formData.preferences.appointmentReminders ? "true" : "false"} onChange={(e) => handleNestedChange(e, "preferences")}>
                                 <option value="false">No</option>
                                 <option value="true">Yes</option>
                             </select>
@@ -332,13 +332,13 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Advance Directives</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <label className="block">Living Will:</label>
-                            <select name="livingWill" value={formData.advanceDirectives.livingWill ? "true" : "false"} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "advanceDirectives")}>
+                            <select name="livingWill" value={formData.advanceDirectives.livingWill ? "true" : "false"} onChange={(e) => handleNestedChange(e, "advanceDirectives")}>
                                 <option value="false">No</option>
                                 <option value="true">Yes</option>
                             </select>
 
                             <label className="block">Power of Attorney:</label>
-                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
+                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
                         </div>
                     </div>
 

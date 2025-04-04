@@ -321,7 +321,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <input type="text" name="contactMethod" value={formData.preferences.contactMethod} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "preferences")} />
 
                             <label className="block">Appointment Reminders:</label>
-                            <select name="appointmentReminders" value={formData.preferences.appointmentReminders ? "true" : "false"} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "preferences")}>
+                            <select name="appointmentReminders" value={formData.preferences.appointmentReminders ? "true" : "false"} onChange={(e) => handleNestedChange(e, "preferences")}>
                                 <option value="false">No</option>
                                 <option value="true">Yes</option>
                             </select>
@@ -332,13 +332,13 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         <h3 className="text-lg font-semibold border-b pb-2 mb-4">Advance Directives</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <label className="block">Living Will:</label>
-                            <select name="livingWill" value={formData.advanceDirectives.livingWill ? "true" : "false"} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "advanceDirectives")}>
+                            <select name="livingWill" value={formData.advanceDirectives.livingWill ? "true" : "false"} onChange={(e) => handleNestedChange(e, "advanceDirectives")}>
                                 <option value="false">No</option>
                                 <option value="true">Yes</option>
                             </select>
 
                             <label className="block">Power of Attorney:</label>
-                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
+                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
                         </div>
                     </div>
 

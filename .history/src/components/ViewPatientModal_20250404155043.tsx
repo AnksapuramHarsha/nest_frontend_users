@@ -39,7 +39,7 @@ const ViewPatientModal: React.FC<ViewPatientModalProps> = ({ upid, onClose }) =>
             <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 p-6">
                 <div className="bg-white p-6 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                     <div>
-                        <h3 className="text-2xl font-bold mb-4 text-center" >Patient Details</h3>
+                        <h3 >Patient Details</h3>
                         <p><strong>UPID:</strong> {patient.upid}</p>
                         <p><strong>ABHA:</strong> {patient.abha}</p>
                         <p><strong>MRN:</strong> {patient.mrn}</p>

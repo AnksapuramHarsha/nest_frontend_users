@@ -338,7 +338,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </select>
 
                             <label className="block">Power of Attorney:</label>
-                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
+                            <input type="text" name="powerOfAttorney" value={formData.advanceDirectives.powerOfAttorney} onChange={(e) => handleNestedChange(e, "advanceDirectives")} />
                         </div>
                     </div>
 

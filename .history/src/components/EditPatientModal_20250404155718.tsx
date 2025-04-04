@@ -171,7 +171,7 @@ const EditPatientModal: React.FC<EditPatientModalProps> = ({
                         <label className="block text-sm font-medium">Postal Code:</label>
                         <input type="text" name="postalCode" value={formData.address.postalCode} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
 
-                        <label className="block text-sm font-medium">Country:</label>
+                        <label className="block">Country:</label>
                         <input type="text" name="country" value={formData.address.country} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
                     </div>
 

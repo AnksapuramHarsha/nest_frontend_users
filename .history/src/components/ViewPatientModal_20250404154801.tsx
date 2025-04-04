@@ -39,7 +39,7 @@ const ViewPatientModal: React.FC<ViewPatientModalProps> = ({ upid, onClose }) =>
             <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 p-6">
                 <div className="bg-white p-6 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                     <div>
-                        <h3 className="text-2xl font-bold mb-4 text-center" >Patient Details</h3>
+                        <h3>Patient Details</h3>
                         <p><strong>UPID:</strong> {patient.upid}</p>
                         <p><strong>ABHA:</strong> {patient.abha}</p>
                         <p><strong>MRN:</strong> {patient.mrn}</p>
@@ -48,11 +48,8 @@ const ViewPatientModal: React.FC<ViewPatientModalProps> = ({ upid, onClose }) =>
                         <p><strong>Gender:</strong> {patient.genderIdentity}</p>
                         <p><strong>Birth Date:</strong> {patient.birthDate}</p>
                         <p><strong>Marital Status:</strong> {patient.maritalStatus}</p>
-                        <p><strong>Address:</strong> {`${patient.address.line1}, ${patient.address.city}, ${patient.address.state}, ${patient.address.postalCode}, ${patient.address.country}`}</p>
-                        <p><strong>Active:</strong> {patient.active ? "Yes" : "No"}</p>
-                        <p><strong>Blood Type:</strong> {patient.bloodType}</p>
-                        <p><strong>Preferred Language:</strong> {patient.preferredLanguage}</p>
-                        <button onClick={onClose} className="bg-red-500 text-white px-2 py-1 rounded ml-2">Close</button>
+                        
+                        <button onClick={onClose}>Close</button>
                     </div>
                 </div>
             </div>
