@@ -81,11 +81,9 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
                 fetchPatients();
             } else {
                 console.error("Failed to delete patient:", response);
-                toast.error("Failed to delete patient. Please try again.");
             }
         } else {
             console.log("Patient deletion canceled.");
-            toast.info("Patient deletion canceled."); 
         }
     }
     

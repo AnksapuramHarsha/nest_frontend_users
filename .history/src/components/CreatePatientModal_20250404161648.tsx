@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createPatient } from "../apis/patientApi";
 import { Patient } from "../types/createPatient";
-import { toast } from "react-toastify"; 
 
 interface CreatePatientModalProps {
     accessToken: string | null;
@@ -120,7 +119,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             onClose();
         } catch (error) {
             console.error("Failed to create patient:", error);
-            toast.error("Failed to create patient. Please try again.");
         }
     };
 

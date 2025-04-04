@@ -85,7 +85,6 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
             }
         } else {
             console.log("Patient deletion canceled.");
-            toast.info("Patient deletion canceled."); 
         }
     }
     

@@ -37,7 +37,6 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
             toast.success("Patients fetched successfully!");
         } catch (error) {
             console.error("Error fetching patients:", error);
-            toast.error("Error fetching patients. Please try again.");
         }
     };
 
@@ -76,16 +75,13 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
             const response = await deletePatient(upid, accessToken);
             console.log("Delete Patient response:", response);
             if (response) {
-                toast.success("Patient deleted successfully!");
                 console.log("Patient deleted successfully:", response);
                 fetchPatients();
             } else {
                 console.error("Failed to delete patient:", response);
-                toast.error("Failed to delete patient. Please try again.");
             }
         } else {
             console.log("Patient deletion canceled.");
-            toast.info("Patient deletion canceled."); 
         }
     }
     

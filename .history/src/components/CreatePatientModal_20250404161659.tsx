@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createPatient } from "../apis/patientApi";
 import { Patient } from "../types/createPatient";
-import { toast } from "react-toastify"; 
 
 interface CreatePatientModalProps {
     accessToken: string | null;
