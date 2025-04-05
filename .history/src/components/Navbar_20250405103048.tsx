@@ -22,11 +22,11 @@ const Navbar: React.FC = () => {
             Current User
           </Link>
         </li>
-        {/* <li>
+        <li>
           <Link to="/userlist" className="hover:text-gray-300">
             User List
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link to="/patients_list" className="hover:text-gray-300">
             Patients List

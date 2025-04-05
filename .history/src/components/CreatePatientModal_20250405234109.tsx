@@ -136,27 +136,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                 tempErrors["identifier.pan"] = "PAN must be 10 characters (e.g., ABCDE1234F)";
             }
         }
-        if (!formData.nameFamily) tempErrors.nameFamily = "Last Name is required";
-        if (!formData.genderIdentity) tempErrors.genderIdentity = "Gender Identity is required";
-        if (!formData.bloodType) {
-            tempErrors.bloodType = "Blood Type is required";
-        } else if (!/^(A|B|AB|O)[+-]$/.test(formData.bloodType)) {
-            tempErrors.bloodType = "Blood Type must be A+, A-, B+, B-, AB+, AB-, O+, or O-";
-        }
-        if (!formData.address.line1) tempErrors["address.line1"] = "Address Line 1 is required";
-        if (!formData.address.city) tempErrors["address.city"] = "City is required";
-        if (!formData.address.state) tempErrors["address.state"] = "State is required";
-        if (!formData.address.postalCode) {
-            tempErrors["address.postalCode"] = "Postal Code is required";
-        } else if (!/^\d{5,6}$/.test(formData.address.postalCode)) {
-            tempErrors["address.postalCode"] = "Postal Code must be 5 or 6 digits";
-        }
-        if (!formData.address.country) tempErrors["address.country"] = "Country is required";
-        if (!formData.contact.phone) {
-            tempErrors["contact.phone"] = "Phone is required";
-        } else if (!/^\d{10}$/.test(formData.contact.phone)) {
-            tempErrors["contact.phone"] = "Phone must be 10 digits";
-        }
 
         setErrors(tempErrors);
         return Object.keys(tempErrors).length === 0; // Return true if no errors
@@ -244,7 +223,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                     onChange={(e) => handleNestedChange(e, "identifier")}
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
                                 />
-                                {errors["identifier.pan"] && <p className="text-red-500 text-sm">{errors["identifier.pan"]}</p>}
                             </div>
 
                         </div>
@@ -254,15 +232,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block">Name Prefix:</label>
-                                <select name="namePrefix" value={formData.namePrefix} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange}>
-                                    <option value="">Select Prefix</option>
-                                    <option value="Mr.">Mr.</option>
-                                    <option value="Mrs.">Mrs.</option>
-                                    <option value="Ms.">Ms.</option>
-                                    <option value="Dr.">Dr.</option>
-                                    <option value="Prof.">Prof.</option>
-                                    <option value="Rev.">Rev.</option>
-                                </select>
+                                <input type="text" name="namePrefix" value={formData.namePrefix} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
                             </div>
 
                             <div>
@@ -279,7 +249,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
                                 <label className="block">Last Name:</label>
                                 <input type="text" name="nameFamily" value={formData.nameFamily} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
-                                {errors.nameFamily && <p className="text-red-500 text-sm">{errors.nameFamily}</p>}
                             </div>
 
                             <div>
@@ -308,7 +277,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
                                 </select>
-                                {errors.genderIdentity && <p className="text-red-500 text-sm">{errors.genderIdentity}</p>}
                             </div>
                             <div>
                                 <label className="block">Biological Sex:</label>
@@ -338,39 +306,11 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </div>
                             <div>
                                 <label className="block">Marital Status:</label>
-                                <select
-                                    name="maritalStatus"
-                                    value={formData.maritalStatus}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                >
-                                    <option value="">Select Marital Status</option>
-                                    <option value="Single">Single</option>
-                                    <option value="Married">Married</option>
-                                    <option value="Divorced">Divorced</option>
-                                    <option value="Widowed">Widowed</option>
-                                    <option value="Separated">Separated</option>
-                                </select>
+                                <input type="text" name="maritalStatus" value={formData.maritalStatus} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
                             </div>
                             <div>
                                 <label className="block">Blood Type:</label>
-                                <select
-                                    name="bloodType"
-                                    value={formData.bloodType}
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Select Blood Type</option>
-                                    <option value="A+">A+</option>
-                                    <option value="A-">A-</option>
-                                    <option value="B+">B+</option>
-                                    <option value="B-">B-</option>
-                                    <option value="AB+">AB+</option>
-                                    <option value="AB-">AB-</option>
-                                    <option value="O+">O+</option>
-                                    <option value="O-">O-</option>
-                                </select>
-                                {errors.bloodType && <p className="text-red-500 text-sm">{errors.bloodType}</p>}
+                                <input type="text" name="bloodType" value={formData.bloodType} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
                             </div>
                             <div>
 
@@ -389,7 +329,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Address Line 1:</label>
                                 <input type="text" name="line1" value={formData.address.line1} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.line1"] && <p className="text-red-500 text-sm">{errors["address.line1"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Address Line 2:</label>
@@ -399,22 +339,21 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">City:</label>
                                 <input type="text" name="city" value={formData.address.city} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.city"] && <p className="text-red-500 text-sm">{errors["address.city"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">State:</label>
                                 <input type="text" name="state" value={formData.address.state} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.state"] && <p className="text-red-500 text-sm">{errors["address.state"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Postal Code:</label>
                                 <input type="text" name="postalCode" value={formData.address.postalCode} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.postalCode"] && <p className="text-red-500 text-sm">{errors["address.postalCode"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Country:</label>
                                 <input type="text" name="country" value={formData.address.country} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.country"] && <p className="text-red-500 text-sm">{errors["address.country"]}</p>}
                             </div>
                         </div>
                     </div>
@@ -429,7 +368,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Phone:</label>
                                 <input type="text" name="phone" value={formData.contact.phone} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
-                                {errors["contact.phone"] && <p className="text-red-500 text-sm">{errors["contact.phone"]}</p>}
                             </div>
                             <div>
                                 <label className="block">Mobile Phone:</label>

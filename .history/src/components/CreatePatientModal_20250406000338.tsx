@@ -429,7 +429,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Phone:</label>
                                 <input type="text" name="phone" value={formData.contact.phone} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
-                                {errors["contact.phone"] && <p className="text-red-500 text-sm">{errors["contact.phone"]}</p>}
                             </div>
                             <div>
                                 <label className="block">Mobile Phone:</label>

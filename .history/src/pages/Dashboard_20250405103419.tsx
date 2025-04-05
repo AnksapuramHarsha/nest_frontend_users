@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
             <p><strong className="text-indigo-600">Name:</strong> {profile.firstName} {profile.lastName}</p>
             <p><strong className="text-indigo-600">Email:</strong> {profile.email}</p>
             <p><strong className="text-indigo-600">networkId:</strong> {profile.networkId}</p>
-            <p><strong className="text-indigo-600">organizationId:</strong> {profile.organizationId}</p>
+            <p><strong className="text-indigo-600">organi:</strong> {profile.networkId}</p>
             <p><strong className="text-indigo-600">Role:</strong> {profile.role}</p>
           </div>
         </div>

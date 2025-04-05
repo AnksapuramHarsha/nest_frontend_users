@@ -389,7 +389,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Address Line 1:</label>
                                 <input type="text" name="line1" value={formData.address.line1} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.line1"] && <p className="text-red-500 text-sm">{errors["address.line1"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Address Line 2:</label>
@@ -399,22 +399,21 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">City:</label>
                                 <input type="text" name="city" value={formData.address.city} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.city"] && <p className="text-red-500 text-sm">{errors["address.city"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">State:</label>
                                 <input type="text" name="state" value={formData.address.state} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.state"] && <p className="text-red-500 text-sm">{errors["address.state"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Postal Code:</label>
                                 <input type="text" name="postalCode" value={formData.address.postalCode} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.postalCode"] && <p className="text-red-500 text-sm">{errors["address.postalCode"]}</p>}
+
                             </div>
                             <div>
                                 <label className="block">Country:</label>
                                 <input type="text" name="country" value={formData.address.country} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
-                                {errors["address.country"] && <p className="text-red-500 text-sm">{errors["address.country"]}</p>}
                             </div>
                         </div>
                     </div>
@@ -429,7 +428,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Phone:</label>
                                 <input type="text" name="phone" value={formData.contact.phone} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "contact")} />
-                                {errors["contact.phone"] && <p className="text-red-500 text-sm">{errors["contact.phone"]}</p>}
                             </div>
                             <div>
                                 <label className="block">Mobile Phone:</label>

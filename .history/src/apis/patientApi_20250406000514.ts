@@ -2,7 +2,7 @@ import axios from "axios";
 import { Patient } from "../types/createPatient";
 
 // const API_URL = "http://127.0.0.1:3000/api/patients";
-const API_URL = 'http://18.142.172.41:3000/api/patients';
+// const API_URL = 'http://18.142.172.41:3000/api/patients';
 
 // Function to create a patient
 export const createPatient = async (patientData: Patient, accessToken: string) => {
