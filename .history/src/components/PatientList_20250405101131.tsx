@@ -5,7 +5,7 @@ import { Patient } from "../types/createPatient";
 import { getPatients, deletePatient } from "../apis/patientApi";
 import ViewPatientModal from "./ViewPatientModal";
 import EditPatientModal from "./EditPatientModal";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 interface PatientListProps {
     accessToken: string | null;
@@ -21,7 +21,7 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
 
     const { networkId } = useAuth(); 
 
-    // const networkId = "82f4cdc9-2945-4345-95db-3f1f9e640bbf";
+    const networkId = "82f4cdc9-2945-4345-95db-3f1f9e640bbf";
 
     useEffect(() => {
         fetchPatients();
@@ -30,10 +30,6 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
     const fetchPatients = async () => {
         if (!accessToken) {
             console.error("Access token is missing!");
-            return;
-        }
-        if (!networkId) {
-            console.error("Network ID is missing!");
             return;
         }
 

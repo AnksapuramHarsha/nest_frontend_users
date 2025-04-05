@@ -15,7 +15,7 @@ const Login: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { token, user } = await login(email, password);
+      const { token, user, networkId } = await login(email, password);
 
       sessionStorage.setItem('accessToken', token.accessToken);
       sessionStorage.setItem('user', JSON.stringify(user));
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
       setAccessToken(token.accessToken);
       setUser(user);
-      setNetworkId(user.networkId); 
+      setNetworkId(networkId); 
 
       navigate('/patients_list');
     } catch (err) {

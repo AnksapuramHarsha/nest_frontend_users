@@ -27,6 +27,15 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
         fetchPatients();
     }, [])
 
+    useEffect(() => {
+        if (networkId) {
+            fetchPatients();
+        } else {
+            console.error("Network ID is missing!");
+            toast.error("Network ID is missing.");
+        }
+    }, [networkId]); 
+
     const fetchPatients = async () => {
         if (!accessToken) {
             console.error("Access token is missing!");

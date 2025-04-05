@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [networkId, setNetworkId] = useState<string | null>(sessionStorage.getItem('networkId') || null);
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken, user, setUser,networkId, setNetworkId }}>
+    <AuthContext.Provider value={{ accessToken, setAccessToken, user, setUser }}>
       {children}
     </AuthContext.Provider>
   );

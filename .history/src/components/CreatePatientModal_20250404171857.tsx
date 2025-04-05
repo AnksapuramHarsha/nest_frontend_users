@@ -118,9 +118,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                 console.error("Access token is null");
                 toast.error("Access token is missing!");
             }
-            if (onUpdate) {
-                onUpdate();
-            }
             onClose();
         } catch (error) {
             console.error("Failed to create patient:", error);

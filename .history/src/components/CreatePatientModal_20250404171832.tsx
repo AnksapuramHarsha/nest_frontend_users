@@ -9,7 +9,7 @@ interface CreatePatientModalProps {
     onUpdate?: () => void;
 }
 
-const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, onClose,onUpdate }) => {
+const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, onClose }) => {
     const [formData, setFormData] = useState<Patient>({
         upid: "",
         abha: "",
@@ -117,9 +117,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             } else {
                 console.error("Access token is null");
                 toast.error("Access token is missing!");
-            }
-            if (onUpdate) {
-                onUpdate();
             }
             onClose();
         } catch (error) {

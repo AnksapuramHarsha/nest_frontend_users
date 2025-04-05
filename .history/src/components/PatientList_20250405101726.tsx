@@ -32,10 +32,7 @@ const PatientList: React.FC<PatientListProps> = ({ accessToken }) => {
             console.error("Access token is missing!");
             return;
         }
-        if (!networkId) {
-            console.error("Network ID is missing!");
-            return;
-        }
+        
 
         try {
             const patientsData = await getPatients(accessToken, networkId);

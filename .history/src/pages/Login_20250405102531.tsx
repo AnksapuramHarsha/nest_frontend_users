@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 
       setAccessToken(token.accessToken);
       setUser(user);
-      setNetworkId(user.networkId); 
+      setNetworkId(networkId); 
 
       navigate('/patients_list');
     } catch (err) {
