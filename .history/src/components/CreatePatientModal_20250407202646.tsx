@@ -148,8 +148,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             }
         }
         if (!formData.nameFamily) tempErrors.nameFamily = "Last Name is required";
-
-        if (!formData.nameMiddle) tempErrors.middleName = "Middle Name is required";
+        if (!formData.nameMiddle) tempErrors.nameFamily = "Middle Name is required";
 
         const preferredNameRegex = /^[A-Za-z\s]+$/; // Regex to check for alphabets and spaces
         if (!formData.preferredName) {
@@ -293,7 +292,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Middle Name:</label>
                                 <input type="text" name="nameMiddle" value={formData.nameMiddle} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
-                                {errors.middleName && <p className="text-red-500 text-sm">{errors.middleName}</p>}
+                                {errors.mi && <p className="text-red-500 text-sm">{errors.nameGiven}</p>}
                             </div>
 
                             <div>
@@ -364,7 +363,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                     value={formData.preferredLanguage}
                                     onChange={handleChange}
                                     className="w-full p-2 border border-gray-300 rounded"
-                                    required>
+                                    required
+                                >
                                     <option value="">Select a Language</option>
                                     {INDIAN_LANGUAGES.map((language, index) => (
                                         <option key={index} value={language}>

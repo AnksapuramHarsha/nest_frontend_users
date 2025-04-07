@@ -293,7 +293,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Middle Name:</label>
                                 <input type="text" name="nameMiddle" value={formData.nameMiddle} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
-                                {errors.middleName && <p className="text-red-500 text-sm">{errors.middleName}</p>}
+                                {errors.nameGiven && <p className="text-red-500 text-sm">{errors.nameGiven}</p>}
+
                             </div>
 
                             <div>
@@ -364,7 +365,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                     value={formData.preferredLanguage}
                                     onChange={handleChange}
                                     className="w-full p-2 border border-gray-300 rounded"
-                                    required>
+                                    required
+                                >
                                     <option value="">Select a Language</option>
                                     {INDIAN_LANGUAGES.map((language, index) => (
                                         <option key={index} value={language}>

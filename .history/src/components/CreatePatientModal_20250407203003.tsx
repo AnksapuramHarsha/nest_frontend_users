@@ -364,7 +364,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                     value={formData.preferredLanguage}
                                     onChange={handleChange}
                                     className="w-full p-2 border border-gray-300 rounded"
-                                    required>
+                                    required
+                                >
                                     <option value="">Select a Language</option>
                                     {INDIAN_LANGUAGES.map((language, index) => (
                                         <option key={index} value={language}>

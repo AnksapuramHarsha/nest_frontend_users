@@ -361,7 +361,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 <label className="block">Preffered Language:</label>
                                 <select
                                     name="preferredLanguage"
-                                    value={formData.preferredLanguage}
+                                    value={formData.}
                                     onChange={handleChange}
                                     className="w-full p-2 border border-gray-300 rounded"
                                     required>

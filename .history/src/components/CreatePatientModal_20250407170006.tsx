@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { createPatient } from "../apis/patientApi";
 import { Patient } from "../types/createPatient";
 import { toast } from "react-toastify";
-import { INDIAN_LANGUAGES, VALID_RELATIONSHIPS, INDIAN_STATES_AND_UTS } from "../types/indianLanguages";
-
+import 
 
 interface CreatePatientModalProps {
     accessToken: string | null;
@@ -62,7 +61,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
     //         // [name]: name === "statusId" ? Number(value) : value === "true" ? true : value === "false" ? false : value,
     //     }));
     // };
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -148,16 +146,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             }
         }
         if (!formData.nameFamily) tempErrors.nameFamily = "Last Name is required";
-
-        if (!formData.nameMiddle) tempErrors.middleName = "Middle Name is required";
-
-        const preferredNameRegex = /^[A-Za-z\s]+$/; // Regex to check for alphabets and spaces
-        if (!formData.preferredName) {
-            tempErrors.preferredName = "Preferred Name is required";
-        } else if (!preferredNameRegex.test(formData.preferredName)) {
-            tempErrors.preferredName = "Preferred Name must contain only alphabets and spaces";
-        }
-
         if (!formData.genderIdentity) tempErrors.genderIdentity = "Gender Identity is required";
         if (!formData.bloodType) {
             tempErrors.bloodType = "Blood Type is required";
@@ -170,7 +158,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         if (!formData.address.postalCode) {
             tempErrors["address.postalCode"] = "Postal Code is required";
         } else if (!/^\d{5,6}$/.test(formData.address.postalCode)) {
-            tempErrors["address.postalCode"] = "Postal Code must be 6 digits";
+            tempErrors["address.postalCode"] = "Postal Code must be 5 or 6 digits";
         }
         if (!formData.address.country) tempErrors["address.country"] = "Country is required";
         if (!formData.contact.phone) {
@@ -293,7 +281,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
                                 <label className="block">Middle Name:</label>
                                 <input type="text" name="nameMiddle" value={formData.nameMiddle} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
-                                {errors.middleName && <p className="text-red-500 text-sm">{errors.middleName}</p>}
                             </div>
 
                             <div>
@@ -306,7 +293,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             <div>
 
                                 <label className="block">Name Suffix:</label>
-                                <select id="suffix" name="suffix" className="w-full p-2 border border-gray-300 rounded" onChange={handleChange}>
+                                <select id="suffix" name="suffix">
                                     <option value="">Select a Suffix</option>
                                     <option value="Jr.">Jr.</option>
                                     <option value="Sr.">Sr.</option>
@@ -359,19 +346,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </div>
                             <div>
                                 <label className="block">Preffered Language:</label>
-                                <select
-                                    name="preferredLanguage"
-                                    value={formData.preferredLanguage}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded"
-                                    required>
-                                    <option value="">Select a Language</option>
-                                    {INDIAN_LANGUAGES.map((language, index) => (
-                                        <option key={index} value={language}>
-                                            {language}
-                                        </option>
-                                    ))}
-                                </select>
+                                <input type="text" name="preferredLanguage" value={formData.preferredLanguage} className="w-full p-2 border border-gray-300 rounded" onChange={handleChange} />
                             </div>
                             <div>
 
@@ -448,18 +423,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </div>
                             <div>
                                 <label className="block">State:</label>
-                                <select
-                                    name="state"
-                                    value={formData.address.state}
-                                    onChange={(e) => handleNestedChange(e, "address")}
-                                    className="w-full p-2 border border-gray-300 rounded">
-                                    <option value="">Select State</option>
-                                    {INDIAN_STATES_AND_UTS.map((state, index) => (
-                                        <option key={index} value={state}>
-                                            {state}
-                                        </option>
-                                    ))}
-                                </select>
+                                <input type="text" name="state" value={formData.address.state} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
                                 {errors["address.state"] && <p className="text-red-500 text-sm">{errors["address.state"]}</p>}
                             </div>
                             <div>
@@ -469,15 +433,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </div>
                             <div>
                                 <label className="block">Country:</label>
-                                <select
-                                    name="country"
-                                    value={formData.address.country}
-                                    onChange={(e) => handleNestedChange(e, "address")}
-                                    className="w-full p-2 border border-gray-300 rounded">
-                                    <option value="">Select Country</option>
-                                    <option value="India">India</option>
-                                    <option value="IN">IN</option>
-                                </select>
+                                <input type="text" name="country" value={formData.address.country} className="w-full p-2 border border-gray-300 rounded" onChange={(e) => handleNestedChange(e, "address")} />
                                 {errors["address.country"] && <p className="text-red-500 text-sm">{errors["address.country"]}</p>}
                             </div>
                         </div>
@@ -520,19 +476,14 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                             </div>
                             <div>
                                 <label htmlFor="emergencyRelationship" className="block">Relationship:</label>
-                                <select
+                                <input
                                     id="emergencyRelationship"
+                                    type="text"
+                                    placeholder="Relationship"
                                     value={formData.emergencyContacts.relationship}
                                     onChange={(e) => handleEmergencyContactChange("relationship", e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                >
-                                    <option value="">Select Relationship</option>
-                                    {VALID_RELATIONSHIPS.map((relationship, index) => (
-                                        <option key={index} value={relationship}>
-                                            {relationship}
-                                        </option>
-                                    ))}
-                                </select>
+                                />
                             </div>
                             <div>
                                 <label htmlFor="emergencyPhone" className="block">Phone:</label>
