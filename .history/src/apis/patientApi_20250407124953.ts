@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Patient } from "../types/createPatient";
 
-// const API_URL = "https://127.0.0.1:3000/api/patients";
+const API_URL = "https://127.0.0.1:3000/api/patients";
 const API_URL = 'https://18.142.172.41/api/patients';
 
 // Function to create a patient
