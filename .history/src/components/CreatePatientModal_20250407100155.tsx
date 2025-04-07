@@ -63,7 +63,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        console.log(`Changing ${name} to ${value}, type: ${typeof value}`);
+        // console.log(`Changing ${name} to ${value}, type: ${typeof value}`);
         setFormData((prev) => {
             let newValue;
             if (name === "statusId") {
@@ -72,7 +72,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             } else {
                 newValue = value === "true" ? true : value === "false" ? false : value;
             }
-            console.log(`Setting ${name} to ${newValue}, type: ${typeof newValue}`);
+            // console.log(`Setting ${name} to ${newValue}, type: ${typeof newValue}`);
             return {
                 ...prev,
                 [name]: newValue,

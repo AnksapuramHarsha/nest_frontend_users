@@ -72,7 +72,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             } else {
                 newValue = value === "true" ? true : value === "false" ? false : value;
             }
-            console.log(`Setting ${name} to ${newValue}, type: ${typeof newValue}`);
+            // console.log(`Setting ${name} to ${newValue}, type: ${typeof newValue}`);
             return {
                 ...prev,
                 [name]: newValue,
