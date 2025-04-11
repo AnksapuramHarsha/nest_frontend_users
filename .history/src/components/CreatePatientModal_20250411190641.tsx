@@ -395,8 +395,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                         </option>
                                     ))}
                                 </select>
-                                {errors.preferredLanguage && <p className="text-red-500 text-sm">{errors.preferredLanguage}</p>}
-
                             </div>
                             <div>
 

@@ -197,9 +197,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         } else if (!/^\d{10}$/.test(formData.contact.phone)) {
             tempErrors["contact.phone"] = "Phone must be 10 digits";
         }
-        if(!formData.preferredLanguage){
-            tempErrors.preferredLanguage = "Preferred Language is required";
-        }
+        if()
 
         setErrors(tempErrors);
         return Object.keys(tempErrors).length === 0; // Return true if no errors
@@ -395,8 +393,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                         </option>
                                     ))}
                                 </select>
-                                {errors.preferredLanguage && <p className="text-red-500 text-sm">{errors.preferredLanguage}</p>}
-
                             </div>
                             <div>
 
