@@ -12,17 +12,6 @@ interface CreatePatientModalProps {
 }
 
 const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, onClose, onUpdate }) => {
-
-    const getCurrentDate = () => {
-        const now = new Date();
-        return now.toISOString().split("T")[0];
-    };
-
-    const getCurrentTime = () => {
-        const now = new Date();
-        return now.toTimeString().split(":").slice(0, 2).join(":");
-    };
-
     const [formData, setFormData] = useState<Patient>({
         upid: "",
         abha: "",
@@ -61,14 +50,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         advanceDirectives: { livingWill: false, powerOfAttorney: "" },
         statusId: 0,
         networkId: "",
-        chief_complaint: "",
-        consultant_name: "",
-        department: "",
-        date_of_visit: getCurrentDate(),
-        time_of_visit: getCurrentTime(),
-        appointment_type: "New",
-        referred_by: "",
-        comments: "",
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -83,7 +64,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
     // };
 
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLT>) => {
         const { name, value } = e.target;
         console.log(`Changing ${name} to ${value}, type: ${typeof value}`);
         setFormData((prev) => {
@@ -136,9 +117,9 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             tempErrors.abha = "ABHA is required";
         } else {
             // Validate ABHA in the format: ABHA_12345
-            const abhaRegex = /^\d{2}-\d{4}-\d{4}-\d{4}$/;
+            const abhaRegex = /^\d{2}-\d{4}-\d{4} \d{4}$/;
             if (!abhaRegex.test(formData.abha)) {
-                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX-XXXX' where X is a digit";
+                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX XXXX' where X is a digit";
             }
         }
         if (!formData.mrn) tempErrors.mrn = "MRN is required";
@@ -206,7 +187,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:", formData);
+        // console.log("Form Data:", formData);
         if (!validate()) {
             toast.error("Please fix the errors in the form.");
             return;
@@ -643,8 +624,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Other Medical Details</h3>
-                        <div className="grid grid-cols-2 gap-4">
+                        <h3>Other Medical Details</h3>
+                        <div>
                             <div>
                                 <label className="block">Chief Complaint:</label>
                                 <input

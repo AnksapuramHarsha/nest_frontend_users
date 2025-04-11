@@ -206,11 +206,11 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:", formData);
-        if (!validate()) {
-            toast.error("Please fix the errors in the form.");
-            return;
-        }
+        // console.log("Form Data:", formData);
+        // if (!validate()) {
+        //     toast.error("Please fix the errors in the form.");
+        //     return;
+        // }
         try {
             if (accessToken) {
                 const response = await createPatient(formData, accessToken);

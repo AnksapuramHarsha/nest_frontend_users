@@ -12,17 +12,6 @@ interface CreatePatientModalProps {
 }
 
 const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, onClose, onUpdate }) => {
-
-    const getCurrentDate = () => {
-        const now = new Date();
-        return now.toISOString().split("T")[0];
-    };
-
-    const getCurrentTime = () => {
-        const now = new Date();
-        return now.toTimeString().split(":").slice(0, 2).join(":");
-    };
-
     const [formData, setFormData] = useState<Patient>({
         upid: "",
         abha: "",
@@ -61,14 +50,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         advanceDirectives: { livingWill: false, powerOfAttorney: "" },
         statusId: 0,
         networkId: "",
-        chief_complaint: "",
-        consultant_name: "",
-        department: "",
-        date_of_visit: getCurrentDate(),
-        time_of_visit: getCurrentTime(),
-        appointment_type: "New",
-        referred_by: "",
-        comments: "",
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -83,7 +64,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
     // };
 
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         console.log(`Changing ${name} to ${value}, type: ${typeof value}`);
         setFormData((prev) => {
@@ -136,9 +117,9 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             tempErrors.abha = "ABHA is required";
         } else {
             // Validate ABHA in the format: ABHA_12345
-            const abhaRegex = /^\d{2}-\d{4}-\d{4}-\d{4}$/;
+            const abhaRegex = /^\d{2}-\d{4}-\d{4} \d{4}$/;;
             if (!abhaRegex.test(formData.abha)) {
-                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX-XXXX' where X is a digit";
+                tempErrors.abha = "ABHA must be in the format ''XX-XXXX-XXXX XXXX'' where X is a digit";
             }
         }
         if (!formData.mrn) tempErrors.mrn = "MRN is required";
@@ -641,114 +622,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Other Medical Details</h3>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block">Chief Complaint:</label>
-                                <input
-                                    type="text"
-                                    name="chief_complaint"
-                                    value={formData.chief_complaint}
-                                    onChange={handleChange}
-                                    placeholder="Search or Add"
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.chief_complaint && <p className="text-red-500 text-sm">{errors.chief_complaint}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Consultant Name:</label>
-                                <input
-                                    type="text"
-                                    name="consultant_name"
-                                    value={formData.consultant_name}
-                                    onChange={handleChange}
-                                    placeholder="Doctor or Department"
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.consultant_name && <p className="text-red-500 text-sm">{errors.consultant_name}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Department:</label>
-                                <select
-                                    name="department"
-                                    value={formData.department}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                >
-                                    <option value="">Select Department</option>
-                                    <option value="cardiology">Cardiology</option>
-                                    <option value="neurology">Neurology</option>
-                                    <option value="orthopedics">Orthopedics</option>
-                                    {/* Add more as needed */}
-                                </select>
-                                {errors.department && <p className="text-red-500 text-sm">{errors.department}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Date of Visit:</label>
-                                <input
-                                    type="date"
-                                    name="date_of_visit"
-                                    value={formData.date_of_visit}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.date_of_visit && <p className="text-red-500 text-sm">{errors.date_of_visit}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Time of Visit:</label>
-                                <input
-                                    type="time"
-                                    name="time_of_visit"
-                                    value={formData.time_of_visit}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.time_of_visit && <p className="text-red-500 text-sm">{errors.time_of_visit}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Appointment Type:</label>
-                                <select
-                                    name="appointment_type"
-                                    value={formData.appointment_type}
-                                    onChange={handleChange}
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                >
-                                    <option value="">Select Type</option>
-                                    <option value="New">New</option>
-                                    <option value="Follow-up">Follow-up</option>
-                                    <option value="Review">Review</option>
-                                </select>
-                                {errors.appointment_type && <p className="text-red-500 text-sm">{errors.appointment_type}</p>}
-                            </div>
-                            <div>
-                                <label className="block">Referred By:</label>
-                                <input
-                                    type="text"
-                                    name="referred_by"
-                                    value={formData.referred_by}
-                                    onChange={handleChange}
-                                    placeholder="Doctor or Facility"
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.referred_by && <p className="text-red-500 text-sm">{errors.referred_by}</p>}
-                            </div>
-
-                            <div>
-                                <label className="block">Comments:</label>
-                                <textarea
-                                    name="comments"
-                                    value={formData.comments}
-                                    onChange={handleChange}
-                                    placeholder="Additional notes"
-                                    className="w-full p-2 border border-gray-300 rounded transition-all duration-200 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-300"
-                                />
-                                {errors.comments && <p className="text-red-500 text-sm">{errors.comments}</p>}
-                            </div>
-
-                        </div>
-
                     </div>
 
                     {/* Submit Button */}

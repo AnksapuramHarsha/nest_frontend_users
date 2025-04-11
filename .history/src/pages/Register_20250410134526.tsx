@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { register } from "../apis/api";
 import {Link} from "react-router-dom"
-import { toast } from "react-toastify";
 
 interface FormData {
   firstName: string;
@@ -154,7 +153,7 @@ const Register: React.FC = () => {
     
       if (response.status === 200 || response.status === 201) {
         console.log("Registration successful! Navigating to login...");
-        toast.success("Registration successful! Redirecting to login...");
+        
         setRegistrationSuccess(true);
         navigate("/login");
       } else {
@@ -257,6 +256,22 @@ const Register: React.FC = () => {
             />
             {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
           </div>
+
+          
+            {/* Organization ID Input */}
+          <div>
+            <label htmlFor="organizationId" className="block text-sm font-medium text-gray-700">Organization ID</label>
+            <input
+              type="text"
+              id="organizationId"
+              name="organizationId"
+              value={formData.organizationId}
+              onChange={handleInputChange}
+              className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
+              placeholder="Enter your organization ID"
+            />
+            {errors.organizationId && <p className="text-sm text-red-500">{errors.organizationId}</p>}
+          </div>
             
             {/* Network ID Input */}
           <div>
@@ -271,22 +286,6 @@ const Register: React.FC = () => {
               placeholder="Enter your network ID"
             />
             {errors.networkId && <p className="text-sm text-red-500">{errors.networkId}</p>}
-          </div>
-
-          
-            {/* Organization ID Input */}
-            <div>
-            <label htmlFor="organizationId" className="block text-sm font-medium text-gray-700">Organization ID</label>
-            <input
-              type="text"
-              id="organizationId"
-              name="organizationId"
-              value={formData.organizationId}
-              onChange={handleInputChange}
-              className="mt-1 p-3 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition duration-300"
-              placeholder="Enter your organization ID"
-            />
-            {errors.organizationId && <p className="text-sm text-red-500">{errors.organizationId}</p>}
           </div>
 
           {/* Avatar File Input */}

@@ -64,8 +64,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         chief_complaint: "",
         consultant_name: "",
         department: "",
-        date_of_visit: getCurrentDate(),
-        time_of_visit: getCurrentTime(),
+        date_of_visit: "",
+        time_of_visit: "",
         appointment_type: "New",
         referred_by: "",
         comments: "",
@@ -136,9 +136,9 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             tempErrors.abha = "ABHA is required";
         } else {
             // Validate ABHA in the format: ABHA_12345
-            const abhaRegex = /^\d{2}-\d{4}-\d{4}-\d{4}$/;
+            const abhaRegex = /^\d{2}-\d{4}-\d{4} \d{4}$/;
             if (!abhaRegex.test(formData.abha)) {
-                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX-XXXX' where X is a digit";
+                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX XXXX' where X is a digit";
             }
         }
         if (!formData.mrn) tempErrors.mrn = "MRN is required";
@@ -206,7 +206,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:", formData);
+        // console.log("Form Data:", formData);
         if (!validate()) {
             toast.error("Please fix the errors in the form.");
             return;
@@ -643,8 +643,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Other Medical Details</h3>
-                        <div className="grid grid-cols-2 gap-4">
+                        <h3>Other Medical Details</h3>
+                        <div>
                             <div>
                                 <label className="block">Chief Complaint:</label>
                                 <input

@@ -136,9 +136,9 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             tempErrors.abha = "ABHA is required";
         } else {
             // Validate ABHA in the format: ABHA_12345
-            const abhaRegex = /^\d{2}-\d{4}-\d{4}-\d{4}$/;
+            const abhaRegex = /^\d{2}-\d{4}-\d{4} \d{4}$/;
             if (!abhaRegex.test(formData.abha)) {
-                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX-XXXX' where X is a digit";
+                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX XXXX' where X is a digit";
             }
         }
         if (!formData.mrn) tempErrors.mrn = "MRN is required";
@@ -206,7 +206,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:", formData);
+        // console.log("Form Data:", formData);
         if (!validate()) {
             toast.error("Please fix the errors in the form.");
             return;

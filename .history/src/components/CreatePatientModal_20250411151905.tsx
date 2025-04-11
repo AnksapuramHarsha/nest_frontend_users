@@ -12,17 +12,6 @@ interface CreatePatientModalProps {
 }
 
 const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, onClose, onUpdate }) => {
-
-    const getCurrentDate = () => {
-        const now = new Date();
-        return now.toISOString().split("T")[0];
-    };
-
-    const getCurrentTime = () => {
-        const now = new Date();
-        return now.toTimeString().split(":").slice(0, 2).join(":");
-    };
-
     const [formData, setFormData] = useState<Patient>({
         upid: "",
         abha: "",
@@ -61,14 +50,6 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
         advanceDirectives: { livingWill: false, powerOfAttorney: "" },
         statusId: 0,
         networkId: "",
-        chief_complaint: "",
-        consultant_name: "",
-        department: "",
-        date_of_visit: getCurrentDate(),
-        time_of_visit: getCurrentTime(),
-        appointment_type: "New",
-        referred_by: "",
-        comments: "",
     });
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -83,7 +64,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
     // };
 
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         console.log(`Changing ${name} to ${value}, type: ${typeof value}`);
         setFormData((prev) => {
@@ -136,9 +117,9 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
             tempErrors.abha = "ABHA is required";
         } else {
             // Validate ABHA in the format: ABHA_12345
-            const abhaRegex = /^\d{2}-\d{4}-\d{4}-\d{4}$/;
+            const abhaRegex = /^\d{2}-\d{4}-\d{4} \d{4}$/;
             if (!abhaRegex.test(formData.abha)) {
-                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX-XXXX' where X is a digit";
+                tempErrors.abha = "ABHA must be in the format 'XX-XXXX-XXXX XXXX' where X is a digit";
             }
         }
         if (!formData.mrn) tempErrors.mrn = "MRN is required";
@@ -206,7 +187,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Form Data:", formData);
+        // console.log("Form Data:", formData);
         if (!validate()) {
             toast.error("Please fix the errors in the form.");
             return;
@@ -643,8 +624,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-lg font-semibold border-b pb-2 mb-4">Other Medical Details</h3>
-                        <div className="grid grid-cols-2 gap-4">
+                        <h3>Other Medical Details</h3>
+                        <div>
                             <div>
                                 <label className="block">Chief Complaint:</label>
                                 <input
@@ -669,6 +650,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 />
                                 {errors.consultant_name && <p className="text-red-500 text-sm">{errors.consultant_name}</p>}
                             </div>
+
+                            {/* Department */}
                             <div>
                                 <label className="block">Department:</label>
                                 <select
@@ -685,6 +668,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 </select>
                                 {errors.department && <p className="text-red-500 text-sm">{errors.department}</p>}
                             </div>
+
+                            {/* Date of Visit */}
                             <div>
                                 <label className="block">Date of Visit:</label>
                                 <input
@@ -696,6 +681,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 />
                                 {errors.date_of_visit && <p className="text-red-500 text-sm">{errors.date_of_visit}</p>}
                             </div>
+
+                            {/* Time of Visit */}
                             <div>
                                 <label className="block">Time of Visit:</label>
                                 <input
@@ -707,6 +694,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 />
                                 {errors.time_of_visit && <p className="text-red-500 text-sm">{errors.time_of_visit}</p>}
                             </div>
+
+                            {/* Appointment Type */}
                             <div>
                                 <label className="block">Appointment Type:</label>
                                 <select
@@ -722,6 +711,8 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 </select>
                                 {errors.appointment_type && <p className="text-red-500 text-sm">{errors.appointment_type}</p>}
                             </div>
+
+                            {/* Referred By */}
                             <div>
                                 <label className="block">Referred By:</label>
                                 <input
@@ -735,6 +726,7 @@ const CreatePatientModal: React.FC<CreatePatientModalProps> = ({ accessToken, on
                                 {errors.referred_by && <p className="text-red-500 text-sm">{errors.referred_by}</p>}
                             </div>
 
+                            {/* Comments */}
                             <div>
                                 <label className="block">Comments:</label>
                                 <textarea
